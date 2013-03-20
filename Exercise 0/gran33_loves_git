@@ -1,0 +1,6 @@
+Something I learned about Git:
+Git is a Distributed VCS. This means that the repository isn't only "checked out" as a snapshot of the latest files, but is in fact cloned entirely.
+This means there is no single point of failure in Git, as everyone has the entire repository on their work station.
+
+A difference between Git and Subversion:
+Git was designed to be fully distributed from the start, allowing each developer to have full local control
