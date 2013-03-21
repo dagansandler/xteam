@@ -6,4 +6,4 @@ Team Members:
 * Ran Greenberg
 
 ![Alt X-tocat](http://octodex.github.com/images/xtocat.jpg "X-tocat FTW!")
-[Kudos](https://github.com/cameronmcefee)
+[Kudos for the X-tocat](https://github.com/cameronmcefee)
