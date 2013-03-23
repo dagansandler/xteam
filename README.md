@@ -5,12 +5,23 @@ Team Members:
 * [Dagan Sandler](https://github.com/dagansandler)
 * [Ran Greenberg](https://github.com/gran33)
 
-Dagan's octocat:
-![Alt X-tocat](http://octodex.github.com/images/xtocat.jpg "X-tocat FTW!")
-[Kudos for the X-tocat](https://github.com/cameronmcefee)
+<span>
+<p>Dagan's octocat:</p>
+<a href="http://octodex.github.com/xtocat/">
+  <img height="300px" width="300px" src="http://octodex.github.com/images/xtocat.jpg" alt="X-tocat" title="X-tocat FTW!" />
+</a>
 
-Ran's octocat:
-![Alt Gangnamtocat](http://octodex.github.com/images/gangnamtocat.png "Gangnamtocat")
-[Kudos for the Gangnamtocat](https://github.com/jeejkang)
+[Kudos](https://github.com/cameronmcefee)
+</span>
+
+
+<span>
+<p>Ran's octocat:</p>
+<a href="http://octodex.github.com/gangnamtocat/">
+  <img float="right" height="300px" width="300px" src="http://octodex.github.com/images/gangnamtocat.png" alt="Gangamtocat" title="Gangamtocat" />
+</a>
+
+[Kudos](https://github.com/jeejkang)
+</span>
 
 == X-team is the best! ==
