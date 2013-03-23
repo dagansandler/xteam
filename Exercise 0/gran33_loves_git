@@ -1,4 +1,5 @@
 Facts about Git:
 - Git doesn’t think of or store its data this way. Instead, Git thinks of its data more like a set of snapshots of a mini filesystem.
 
-- The mechanism that Git uses for this checksumming is called a SHA-1 hash.
+Difference between Subversion and Git:
+- Subversion's UI is more mature than Git's
