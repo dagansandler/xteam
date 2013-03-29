@@ -14,7 +14,7 @@ Dagan's octocat: ([Kudos @cameronmcefee](https://github.com/cameronmcefee))
 Ran's octocat: ([Kudos @jina](https://github.com/jina))
 <!-- Using html so images are in reasonable size -->
 <a href="http://octodex.github.com/hipster-partycat/">
-  <img float="right" height="300px" width="300px" src="http://octodex.github.com/images/hipster-partycat.jpg" alt="hipster-partycat" title="Gangamtocat" />
+  <img float="right" height="300px" width="300px" src="http://octodex.github.com/images/hipster-partycat.jpg" alt="hipster-partycat" title="hipster-partycat" />
 </a>
 
 == X-team is the best! ==
