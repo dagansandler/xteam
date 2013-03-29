@@ -11,9 +11,9 @@ Dagan's octocat: ([Kudos](https://github.com/cameronmcefee))
   <img height="300px" width="300px" src="http://octodex.github.com/images/xtocat.jpg" alt="X-tocat" title="X-tocat FTW!" />
 </a>
 
-Ran's octocat: ([Kudos](https://github.com/jeejkang))
+Ran's octocat: ([jina](https://github.com/jina))
 <!-- Using html so images are in reasonable size -->
-<a href="http://octodex.github.com/gangnamtocat/">
+<a href="http://octodex.github.com/hipster-partycat/">
   <img float="right" height="300px" width="300px" src="http://octodex.github.com/images/hipster-partycat.jpg" alt="Gangamtocat" title="Gangamtocat" />
 </a>
 
