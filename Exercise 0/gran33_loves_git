@@ -1,2 +1,6 @@
 1. Git - Snapshots, Not Differences
-2. Git - Nearly Every Operation Is Local
+
+Git vs. SVN:
+1. Git is much faster than Subversion
+2. Subversion allows you to check out just a subtree of a repository.
+	Git requires you to clone the entire repository (including history) and create a working copy that mirrors at least a subset of the items under version control.
