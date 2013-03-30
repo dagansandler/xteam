@@ -1,5 +1,2 @@
-Facts about Git:
-- Git doesn’t think of or store its data this way. Instead, Git thinks of its data more like a set of snapshots of a mini filesystem.
-
-Difference between Subversion and Git:
-- Subversion's UI is more mature than Git's
+1. Git - Snapshots, Not Differences
+2. Git - Nearly Every Operation Is Local
