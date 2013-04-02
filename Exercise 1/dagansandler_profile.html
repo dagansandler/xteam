@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
 		<style>
@@ -35,17 +35,18 @@
 				-o-transform:rotate(20deg); /* Opera */
 				margin: 5em;
 				margin-right: 10%;
+				float:right;
 			}
 			.polaroid {
 				width:250px;
 				height:300px;
 				background:#FFF;
 				padding: 10px;
-				float:right;
 				margin-right:5px;
 			}
 			.image-holder {
 				background:black;
+				border:1px solid;
 				margin:auto;
 				width:230px;
 				height:230px;
@@ -99,16 +100,17 @@
 	<body>
 		<form id="login_form" action="#">
 			<span>Username:</span>
-			<input type="text" name="username" placeholder="username" />
+			<input type="text" name="username" placeholder="username">
 			<span>Password:</span>
-			<input type="password" name="password" placeholder="password" />
-			<input type="submit" value="Send" />
+			<input type="password" name="password" placeholder="password">
+			<input type="submit" value="Send">
 		</form>
-		<hr />
+		<hr>
 		<div class="polaroid" id="profilePic">
 			<div class="image-holder">  
-				<a href="http://github.com/dagansandler" target="_blank">
-					<img id="profileImage" src="http://i46.tinypic.com/axi7sw.png" onload="style.opacity='1';"/>
+				<a href="http://octodex.github.com/xtocat/" target="_blank">
+					<!-- old pic: http://i46.tinypic.com/axi7sw.png -->
+					<img id="profileImage" src="http://octodex.github.com/images/xtocat.jpg" onload="style.opacity='1';"/>
 				</a>
 			</div>
 			<span class="caption">Dagan Sandler</span>
@@ -121,30 +123,26 @@
 				<p>I am a 4th year student at Ben-Gurion University, studying Software Engineering</p>
 				<p>I grew up in Metulla, all the way up north at the tip of the Upper Galilee</p>
 			</span>
-			<table>
-				<thead>
-					<tr>
-						<th>Website</th>
-						<th>Why Go There</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td><a href="#">Somewhere</a></td>
-						<td>Because</td>
-					</tr>
-					<tr>
-						<td><a href="#">Somewhere</a></td>
-						<td>Because</td>
-					</tr>
-					<tr>
-						<td><a href="#">Somewhere</a></td>
-						<td>Because</td>
-					</tr>
-				</tbody>
+			<table id="favorite_websites">
+				<tr>
+					<th>Website</th>
+					<th>Why Go There</th>
+				</tr>
+				<tr>
+					<td><a href="#">Somewhere</a></td>
+					<td>Because</td>
+				</tr>
+				<tr>
+					<td><a href="#">Somewhere</a></td>
+					<td>Because</td>
+				</tr>
+				<tr>
+					<td><a href="#">Somewhere</a></td>
+					<td>Because</td>
+				</tr>
 			</table>
 		</div>
-		<hr />
+		<hr>
 		<div id="bottomQuote">
 			<span>Something amuzing</span>
 		</div>
