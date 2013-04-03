@@ -14,28 +14,45 @@
 			{
 				height:100%;
 				margin:0;
-				padding:15px;
-				background: #1e5799; /* Old browsers */
-				background: -moz-linear-gradient(top,  #1e5799 0%, #207cca 0%, #2989d8 50%, #7db9e8 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(0%,#207cca), color-stop(50%,#2989d8), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top,  #1e5799 0%,#207cca 0%,#2989d8 50%,#7db9e8 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top,  #1e5799 0%,#207cca 0%,#2989d8 50%,#7db9e8 100%); /* Opera 11.10+ */
-				background: -ms-linear-gradient(top,  #1e5799 0%,#207cca 0%,#2989d8 50%,#7db9e8 100%); /* IE10+ */
-				background: linear-gradient(to bottom,  #1e5799 0%,#207cca 0%,#2989d8 50%,#7db9e8 100%); /* W3C */
-				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+				
+				background: rgb(206,219,233); /* Old browsers */
+				background: -moz-linear-gradient(-45deg,  rgba(206,219,233,1) 0%, rgba(170,197,222,1) 17%, rgba(97,153,199,1) 50%, rgba(65,154,214,1) 59%, rgba(75,184,240,1) 71%, rgba(58,139,194,1) 84%, rgba(58,132,195,1) 100%, rgba(38,85,139,1) 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(206,219,233,1)), color-stop(17%,rgba(170,197,222,1)), color-stop(50%,rgba(97,153,199,1)), color-stop(59%,rgba(65,154,214,1)), color-stop(71%,rgba(75,184,240,1)), color-stop(84%,rgba(58,139,194,1)), color-stop(100%,rgba(58,132,195,1)), color-stop(100%,rgba(38,85,139,1))); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(-45deg,  rgba(206,219,233,1) 0%,rgba(170,197,222,1) 17%,rgba(97,153,199,1) 50%,rgba(65,154,214,1) 59%,rgba(75,184,240,1) 71%,rgba(58,139,194,1) 84%,rgba(58,132,195,1) 100%,rgba(38,85,139,1) 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(-45deg,  rgba(206,219,233,1) 0%,rgba(170,197,222,1) 17%,rgba(97,153,199,1) 50%,rgba(65,154,214,1) 59%,rgba(75,184,240,1) 71%,rgba(58,139,194,1) 84%,rgba(58,132,195,1) 100%,rgba(38,85,139,1) 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(-45deg,  rgba(206,219,233,1) 0%,rgba(170,197,222,1) 17%,rgba(97,153,199,1) 50%,rgba(65,154,214,1) 59%,rgba(75,184,240,1) 71%,rgba(58,139,194,1) 84%,rgba(58,132,195,1) 100%,rgba(38,85,139,1) 100%); /* IE10+ */
+				background: linear-gradient(135deg,  rgba(206,219,233,1) 0%,rgba(170,197,222,1) 17%,rgba(97,153,199,1) 50%,rgba(65,154,214,1) 59%,rgba(75,184,240,1) 71%,rgba(58,139,194,1) 84%,rgba(58,132,195,1) 100%,rgba(38,85,139,1) 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cedbe9', endColorstr='#26558b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+			}
+			
+			#MyBody
+			{
+				padding-left:15px;
+				padding-top:15px;
+			}
+			
+			.MyForm
+			{
+				font-size:20px;
+			}
+			
+			#password
+			{
+				padding-left:2em;
 			}
 			
 			#name
 			{
 				font-weight: bold;
-				font-size:45px;
+				font-size:30px;
+				padding-left:20px;
 			}
 			
 			ul
 			{
-				font-size:30px;
+				font-size:20px;
+				line-height:150%;
 			}
-			
 			
 			.MyTable,td,th 
 			{
@@ -44,25 +61,30 @@
 				border-collapse:collapse;
 				text-align:center;
 				width:650px;
-				font-size:30px;
+				font-size:20px;
 				padding:10px;
+				line-height:80%;
+
 			}
-						
+				
+			.MyTable
+			{
+				margin-left:3em;
+			}
 			hr
 			{
 				border-color:gray;
+				width:100%;
 			}
 			
 			.polaroid 
 			{
-				
 				background:#FFF;
 				padding:5px;
-				margin:5em;
+				margin:8em;
 				width:300px;
 				height:400px;
 				float:right;
-				margin-left:5px;
 				transform:rotate(10deg);
 				-ms-transform:rotate(10deg); /* IE 9 */
 				-moz-transform:rotate(10deg); /* Firefox */
@@ -70,19 +92,18 @@
 				-o-transform:rotate(10deg); /* Opera */
 			}
 			
-			
 			.image-holder 
 			{
 		
 				display:block;
-				overflow:hidden;
 				width:100%;
 				height:330px;
 				
 			}
+			
 			.caption 
 			{
-				margin-top:5px;
+				margin-top:3px;
 				display:block;
 				font-size:3em;
 				text-align:center;
@@ -90,82 +111,105 @@
 			
 			#like_image
 			{
-				max-width:50px;
-				max-height:300px;
+				max-width:40px;
+				max-height:30px;
 			}
 			
 			#image
 			{
 				max-width:100%;
 				max-height:100%;
+				opacity:0;
+				-moz-transition: opacity 2s; /* Firefox 4 */
+				-webkit-transition: opacity 2s; /* Safari and Chrome */
+				-o-transition: opacity 2s;
+				transition: opacity 2s;
 			}
-
+			
+			#footer
+			{
+				padding-top:250px;
+			}
+			
+			#quote
+			{
+				font-weight: bold;
+				font-size: 25px;
+				display:inline;
+			}
+			
+			#jobs
+			{
+				font-size: 15px;
+				display:inline;
+				padding-left:10px;
+			}
+			
 
 		</style>
 	</head>
 
 	<body>
-	
-	<form>
-		<span>Username:</span>
-		<input placeholder="enter username">
-		<span>Password:</span>
-		<input placeholder="enter password">
-		<button>Submit</button>
-		
-		
-	</form>
-	
-	<hr>
-	
-	<div class="polaroid">
-        <div class="image-holder">  
-            <img id="image" src="https://secure.gravatar.com/avatar/77dc3a788aa91829e0855babe561ff2a?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png"/>
-        </div>
-        <span class="caption">Let's Party!</span>
-    </div>
-	
-	<div class="MyContent">
-		<p id="name"> Ran, Greenberg (066709353)</h1>
+		<div id="MyBody">
+			<form class="MyForm">
+				<span>Username:</span>
+				<input placeholder="enter username">
+				<span id="password">Password:</span>
+				<input placeholder="enter password">
+				<input type=button onClick="parent.location='http://www.astccc.net/Images/under-construction.gif'" value='Submit'>
+				
+			</form>
+			
+			<hr>
+			
+			<div class="polaroid">
+				<div class="image-holder">  
+					<img id="image"   onload="this.style.opacity='1';"  src="https://secure.gravatar.com/avatar/77dc3a788aa91829e0855babe561ff2a?s=420&d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png"/>
+				</div>
+				<span class="caption">Let's Party!</span>
+			</div>
+			
+			<div class="MyContent">
+				<p id="name"> Ran, Greenberg (066709353)</p>
 
-			<ul>
-				<li> Welcome to my personal website</li>
-				<li> Welcome to my personal website</li>
-				<li> Welcome to my personal website</li>
-			</ul>
+					<ul>
+						<li> I am a Software engineering student in my 4th year (last year).</li>
+						<li> My current hometown is Beer-Sheva, the capital of the south in Israel.</li>		
+						<li> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</li>
+					</ul>
+					</br>	
+					<table class="MyTable">
+						<th>Link</th>
+						<th><img id="like_image"src="http://upload.wikimedia.org/wikipedia/commons/1/13/Facebook_like_thumb.png"/> Reason</th>
+						<tr>
+							<td>
+								<a href="http://www.google.com" target="_blank">Google</a>
+							</td>
+							<td>Find my self...</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://www.ynet.co.il" target="_blank">Ynet</a>
+							</td>
+							<td>Best israeli news site...</td>
+						</tr>
+						<tr>
+							<td><a href="http://stackoverflow.com/" target="_blank">Stackoverflow</a></td>
+							<td>Best for homework :)</td>
+						</tr>
+					
+					</table>
+			</div>
+				
+			</br>	
 			
-			<table class="MyTable">
-				<th>Link</th>
-				<th><img id="like_image" src="http://upload.wikimedia.org/wikipedia/commons/1/13/Facebook_like_thumb.png"/> Reason</th>
-				<tr>
-					<td>
-						<a href="http://www.google.com">Google</a>
-					</td>
-					<td>Find my self...</td>
-				</tr>
-				<tr>
-					<td>
-						<a href="http://www.ynet.co.il">Ynet</a>
-					</td>
-					<td>
-						<span>Best israeli news site...</span>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="http://stackoverflow.com/">Stackoverflow</a></td>
-					<td>Best for homework...</td>
-				</tr>
-			
-			</table>
-	</div>
-		
-	</br>	
-	<hr>
-		
-	<div>
-		<p>Hello World</p>
-	</div>
-		
+				
+			<div id="footer">
+				<hr>
+				<p id="quote">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</p>
+				<p id="jobs"></t>Steve Jobs</p>
+			</div>
+		</div>	
 	</body>
 
 </html>
