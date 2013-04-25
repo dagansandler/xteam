@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title> Ran Greenberg Profile </title>
+		
+		<style>
+			html
+			{
+				height:100%;
+			}
+		
+			body
+			{
+				height:100%;
+				margin:0;
+				background: rgb(216,224,222); /* Old browsers */
+				background: -moz-linear-gradient(-45deg,  rgba(216,224,222,1) 0%, rgba(174,191,188,1) 22%, rgba(153,175,171,1) 33%, rgba(142,166,162,1) 50%, rgba(130,157,152,1) 67%, rgba(78,92,90,1) 82%, rgba(14,14,14,1) 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(216,224,222,1)), color-stop(22%,rgba(174,191,188,1)), color-stop(33%,rgba(153,175,171,1)), color-stop(50%,rgba(142,166,162,1)), color-stop(67%,rgba(130,157,152,1)), color-stop(82%,rgba(78,92,90,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(-45deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(-45deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(-45deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* IE10+ */
+				background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d8e0de', endColorstr='#0e0e0e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+			}
+			
+			#MyBody
+			{
+				padding-left:15px;
+				padding-top:15px;
+				padding-right:15px;
+				color: rgba(0,0,0,0.7);
+				text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+				
+				 
+			}
+			
+			.MyForm
+			{
+				font-size:15px;
+				float:right;
+			}
+			
+			#password
+			{
+				padding-left:2em;
+
+			}
+			
+			#name
+			{
+				font-weight: bold;
+				font-size:30px;
+				padding-left:20px;
+				text-shadow: 2px 2px 2px #374683;
+			}
+			
+			ul
+			{
+				font-size:20px;
+				line-height:150%;
+			}
+			
+			.MyTable,td,th 
+			{
+			
+				border:1px solid;
+				border-collapse:collapse;
+				text-align:center;
+				width:650px;
+				font-size:20px;
+				padding:10px;
+				line-height:80%;
+
+			}
+			
+			.td
+			{
+				font-size:50px;
+			}
+				
+			.MyTable
+			{
+				margin-left:3em;
+			}
+			hr
+			{
+				border-color:gray;
+				width:100%;
+			}
+			
+			.polaroid 
+			{
+				background:#FFF;
+				padding:5px;
+				margin:8em;
+				width:300px;
+				height:400px;
+				float:right;
+				transform:rotate(10deg);
+				-ms-transform:rotate(10deg); /* IE 9 */
+				-moz-transform:rotate(10deg); /* Firefox */
+				-webkit-transform:rotate(10deg); /* Safari and Chrome */
+				-o-transform:rotate(10deg); /* Opera */
+			}
+			
+			.image-holder 
+			{
+		
+				display:block;
+				width:100%;
+				height:330px;
+				
+			}
+			
+			.caption 
+			{
+				margin-top:3px;
+				display:block;
+				font-size:3em;
+				text-align:center;
+				font-style:italic;
+				color: #fff;
+				text-shadow:0 0 5px #CCCCCC,
+							0 0 10px #CCCCCC,
+							0 0 15px #CCCCCC,
+							0 0 20px #095816,
+							0 0 25px #095816,
+							0 0 30px #095816,
+							0 0 50px #095816,
+							0 0 80px #095816,
+							0 0 100px #095816,
+							0 0 150px #095816
+			}
+			
+			#like_image
+			{
+				max-width:40px;
+				max-height:30px;
+			}
+			
+			#image
+			{
+				max-width:100%;
+				max-height:100%;
+				opacity:0;
+				-moz-transition: opacity 2s; /* Firefox 4 */
+				-webkit-transition: opacity 2s; /* Safari and Chrome */
+				-o-transition: opacity 2s;
+				transition: opacity 2s;
+			}
+			
+			#footer
+			{
+				padding-top:250px;
+				font-weight:bold;
+				text-shadow: 0 0 10px #fff,
+								0 0 20px #fff,
+								0 0 30px #fff,
+                   0 0 40px #ff00de,
+                   0 0 70px #ff00de,
+                   0 0 80px #ff00de,
+                   0 0 100px #ff00de,
+                   0 0 150px #ff00de;
+			}
+			
+			#quote
+			{
+				font-style: italic;
+				font-size: 15px;
+				display:inline;
+			}
+			
+			#jobs
+			{
+				font-size: 13px;
+				display:inline;
+				padding-left:0px;
+			}
+			
+
+		</style>
+	</head>
+
+	<body>
+		<div id="MyBody">
+			<form class="MyForm">
+				<span>Username:</span>
+				<input placeholder="enter username">
+				<span id="password">Password:</span>
+				<input placeholder="enter password">
+				<input type=button onClick="parent.location='066709353/images/gran33_bitstrip.jpeg'" value='Send'>
+				
+			</form>
+			</br>
+			</br>
+			
+			<hr>
+			
+			<div class="polaroid">
+				<div class="image-holder">  
+					<a href="066709353/images/gran33_bitstrip.jpeg" target="_blank">
+						<img id="image" onload="this.style.opacity='1';" src="066709353/images/gran33_bitstrip.jpeg"/>
+					</a>
+				
+					
+				</div>
+				<span class="caption">Let's Party!</span>
+			</div>
+			
+			<div class="MyContent">
+				<p id="name"> Ran, Greenberg (066709353)</p>
+
+					<ul>
+						<li> I am a Software engineering student in my 4th year (last year).</li>
+						<li> My current hometown is Beer-Sheva, the capital of the south in Israel.</li>		
+						<li> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</li>
+					</ul>
+					</br>	
+					<table class="MyTable">
+						<th>Link</th>
+						<th><img id="like_image"src="066709353/images/Facebook_like_thumb.png"/> Reason</th>
+						<tr>
+							<td>
+								<a href="http://lmgtfy.com/?q=google" target="_blank">Google</a>
+							</td>
+							<td>That how i search stuff</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="http://lmgtfy.com" target="_blank">Lmgtfy</a>
+							</td>
+							<td>That how i help "friends" :)</td>
+						</tr>
+						<tr>
+							<td><a href="http://stackoverflow.com/" target="_blank">Stackoverflow</a></td>
+							<td>That how friends help me ;)</td>
+						</tr>
+					
+					</table>
+			</div>
+				
+			</br>	
+			
+				
+			<div id="footer">
+				<hr>
+				<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote >
+				<p id="jobs"></t>Steve Jobs</p>
+			</div>
+		</div>	
+	</body>
+
+</html>
