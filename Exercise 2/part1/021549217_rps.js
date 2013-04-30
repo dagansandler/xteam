@@ -4,13 +4,13 @@ var rps = function(item1, item2) {
         rpsArray = ['rock', 'paper', 'scissors'],
         results = ['Oh no! It\'s a tie!', 'Player 1 won!', 'Player 2 won!'];
     /*player 1 input check*/
-    if (item1 === undefined || rpsArray.indexOf(item1 === -1)) {
+    if (item1 === undefined || rpsArray.indexOf(item1) === -1) {
         r = Math.floor(Math.random() * 3);
         item1 = rpsArray[r];
         /*console.log("item1 was undefined and set to " + item1);*/
     }
     /*player 2 input check*/
-    if (item2 === undefined || rpsArray.indexOf(item2 === -1)) {
+    if (item2 === undefined || rpsArray.indexOf(item2) === -1) {
         r = Math.floor(Math.random() * 3);
         item2 = rpsArray[r];
         /*console.log("item2 was undefined and set to " + item2);*/
