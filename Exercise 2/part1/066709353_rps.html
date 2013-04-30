@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="066709353_rps.js"></script>
+		<title> Rock, Paper, Scissors </title>
+		
+		<style>
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="MyDescription">
+			<p id="first">Welcome to my rock-paper-scissors JavaScript game!</p>
+			<p id="second">My impelmentation is as follow:</p>
+			<ul>
+				<li>
+					There are 4 functions:
+					<ol>
+						<li>rps(item1, item2) - The main function as describe in the assignment.</li>
+						<li>generateIfNeeded(item1) - If one of the given arguments are illegal or empty, generate randomly item (rock, paper or scissors).</li>
+						<li>numberToRPS(number) - Helper method, helps to convert from numbers to rock, paper and scissors.</li>
+						<li>whoIsTheWinner(item1, item2) - Core method, deside who is the winner as the game describe.</li>
+					</ol>
+				</li>
+				</br>
+				<li>
+				The method rps is the main pivot that invoke the 3 other functions.
+				</li>
+				</br>
+				<li>
+				First, there is an input check for the rps parameter with the help of generateIfNeeded method.
+				If needed, generateIfNeeded generate a random item.
+				</li>
+				</br>
+				<li>
+				Atfer that, the winner is detemine with the help of whoIsTheWinner method.
+				</li>
+			</ul>
+		
+		</div>
+		
+		<p>You can try it your self:</p>	
+	
+		<form class="MyForm">
+				<span id="first_text">1st Argument:</span>
+				<input id="first_arg" placeholder="enter 1st argument">
+				</br>
+				<span id="second_text">2nd Argument:</span>
+				<input id="second_arg" placeholder="enter 2nd argument">
+				</br>
+				<input type=button onClick="rps(document.getElementById('first_arg').value, document.getElementById('second_arg').value)" value='Play'>		
+		</form>
+		</br>
+			<div id="meta_results">The Parameters are:</div>
+			<div id="result1"></div>
+			<div id="result2"></div>
+			</br>
+			<div id="meta_winner">The winner is:</div>
+			<div id="winner"></div>
+	</body>
+
+</html>
