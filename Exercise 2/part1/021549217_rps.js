@@ -47,4 +47,6 @@ var rps = function(item1, item2) {
     document.write("<p>Player 2 chose: <img src='images/" + item2 + ".jpg' width=200px/></p>");
     document.write("<p>" + results[result] + "</p>");
     document.close();
+    
+    return results[result];
 };
