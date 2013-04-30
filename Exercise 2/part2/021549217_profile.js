@@ -1,4 +1,6 @@
 
+/* *********** Genereal Profile Section *************** */
+/* login function. takes the form and extracts the values */
 function login(form) {
     var username = form.username.value;
     var password = form.password.value;
@@ -11,6 +13,8 @@ function login(form) {
     }
 }
 
+/* *********** Caculator Section *************** */
+/*calculator object definition*/
 var Calculator = (function () {
 
 	var Calculator = function() {
@@ -36,11 +40,13 @@ var Calculator = (function () {
 	
 })();
 
+/*check if the string we get is a natural number*/
 function isNaturalNumber (str) {
 	var pattern = /^(0|([1-9]\d*))$/;
 	return pattern.test(str);
 }
 
+/*checks for valid input in the calculator and parses the input if legal*/
 function inputChecker(item) {
 	if (item === '') {
 		return 0;
@@ -57,6 +63,7 @@ function inputChecker(item) {
 
 var myCalc = new Calculator();
 
+/*handle add action*/
 function addHandler(item){
 	var toAdd = inputChecker(item);
 	if (toAdd != "false") {
@@ -64,6 +71,7 @@ function addHandler(item){
 	}    
 }
 
+/*handle multiply action*/
 function multiplyHandler(item){
 	var toAdd = inputChecker(item);
 	if (toAdd != "false") {
@@ -71,6 +79,7 @@ function multiplyHandler(item){
 	}    
 }
 
+/*handle clear action*/
 function clearHandler(item){
 	document.getElementById("result").value = myCalc.clear();
 }
