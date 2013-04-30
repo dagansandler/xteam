@@ -17,7 +17,11 @@ function isNaturalNumber (str) {
 }
 
 function inputChecker(item) {
-	if (!isNaturalNumber(item) && itam != 0) {
+	if (item === '') {
+		return 0;
+	}
+		
+	if (!isNaturalNumber(item)) {
 		alert("Shame on you! this is Not a natural number!");
 		return "false";
 	}
