@@ -2,6 +2,7 @@
 <html>
 
 	<head>
+		<script src="066709353_calculator.js"></script>
 		<title> Ran Greenberg Profile </title>
 		
 		<style>
@@ -36,13 +37,20 @@
 				 
 			}
 			
-			.MyForm
+			#MyForm
 			{
 				font-size:15px;
 				float:right;
 			}
 			
-			#password
+			#connected
+			{
+				font-size:15px;
+				float:right;
+				display:none;
+			}
+			
+			#password_text
 			{
 				padding-left:2em;
 
@@ -179,75 +187,212 @@
 				padding-left:0px;
 			}
 			
+			#calculator
+			{
+				width: 700px ;
+				margin-left: auto ;
+				margin-right: auto ;
+				float:center;
+				display:none;
+			}
+			
+			.button, a.button 
+			{
+				margin-right:17px;
+				border: 1px solid rgba(0,0,0,0.3);
+				background: #eee;
+				color: #515151;
+				display: inline-block;
+				font-size: 24px;
+				font-weight: 700;
+				padding: 21px 34px;
+				position: relative;
+				text-decoration: none;
+				background: -webkit-gradient(linear, left bottom, left top, color-stop(0.21, rgb(203,203,203)), color-stop(0.58, rgb(227,226,226)));
+				background: -moz-linear-gradient(center bottom, rgb(203,203,203) 21%, rgb(227,226,226) 58%);
+				-moz-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+				-moz-box-shadow: 0 0 0 5px rgba(255,255,255,0.3) /* glass edge */, inset 0 1px 0 0 rgba(255,255,255,0.5) /* top highlight */, inset 0 -3px 0 0 rgba(0,0,0,0.5) /* bottom shadow */;
+				-webkit-box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 1px 0 0 rgba(255,255,255,0.5), inset 0 -3px 0 0 rgba(0,0,0,0.5);
+				box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 1px 0 0 rgba(255,255,255,0.5), inset 0 -3px 0 0 rgba(0,0,0,0.5);
+				text-shadow: 0 1px rgba(255,255,255,0.6);
+			}
+			button::-moz-focus-inner, a.button::-moz-focus-inner 
+			{
+				padding:0;
+				border:0;
+			}
+			button:hover, a.button:hover 
+			{
+				background: #cbcbcb;
+				cursor: pointer;
+			}
+			button:active, a.button:active 
+			{
+				background: #ccc;
+				padding: 22px 34px 20px; /* Bump down text–Thanks to Jason for the suggestion */
+				-moz-box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 -1px 0 0 rgba(255,255,255,0.5), inset 0 2px 5px 0 rgba(0,0,0,0.2);
+				-webkit-box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 -1px 0 0 rgba(255,255,255,0.5), inset 0 2px 5px 0 rgba(0,0,0,0.2);
+				box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 -1px 0 0 rgba(255,255,255,0.5), inset 0 2px 5px 0 rgba(0,0,0,0.2);
+				text-shadow: none;
+			}
+			button[disabled] 
+			{
+				background: #ddd;
+				color: #ccc;
+				cursor: default;
+				-moz-box-shadow: 0 0 0 5px rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.5);
+				-webkit-box-shadow: 0 0 0 5px rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.5);
+				box-shadow: 0 0 0 5px rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.5);
+				text-shadow: none;
+			}
+			button[disabled]:active 
+			{
+				background: #ddd;
+				color: #ccc;
+			}
+			.red 
+			{
+				background: #e1001a;
+				color: #fff;
+				background: -webkit-gradient(linear, left bottom, left top, color-stop(0.21, rgb(192,0,22)), color-stop(0.58, rgb(226,0,26)));
+				background: -moz-linear-gradient(center bottom, rgb(192,0,22) 21%, rgb(226,0,26) 58%);
+				text-shadow: 0 1px rgba(0,0,0,0.25);
+			}
+			.red:hover 
+			{
+				background: #cb0018;
+				text-shadow: 0 1px rgba(0,0,0,0);
+			}
+			.red:active 
+			{
+				background: #ae0014;
+			}
+			a.smaller 
+			{
+				font-size: 12px;
+				margin: 18px 0px;
+				padding: 10px 14px;			
+			}
+			a.smaller:active 
+			{
+				padding: 11px 14px 9px;			
+			}
+			body {background-color:#636363;}
+
+			input[type=text], textarea 
+			{
+				-webkit-transition: all 0.30s ease-in-out;
+				-moz-transition: all 0.30s ease-in-out;
+				-ms-transition: all 0.30s ease-in-out;
+				-o-transition: all 0.30s ease-in-out;
+				outline: none;
+				padding: 3px 0px 3px 3px;
+				margin: 5px 1px 3px 0px;
+				border: 1px solid #DDDDDD;
+			}
+			 
+			input[type=text]:focus, textarea:focus 
+			{
+				box-shadow: 0 0 30px rgba(81, 203, 238, 1);
+				padding: 3px 0px 3px 3px;
+				margin: 5px 1px 3px 0px;
+				border: 1px solid rgba(81, 203, 238, 1);
+			}
+			
+			#numberInput, #calculatorResult
+			{
+				font-size:27px;
+			}
+
+			
 
 		</style>
 	</head>
 
 	<body>
 		<div id="MyBody">
-			<form class="MyForm">
+			<form id="MyForm">
 				<span>Username:</span>
-				<input placeholder="enter username">
-				<span id="password">Password:</span>
-				<input placeholder="enter password">
-				<input type=button onClick="parent.location='066709353/images/gran33_bitstrip.jpeg'" value='Send'>
+				<input id="username" placeholder="enter username">
+				<span id="password_text">Password:</span>
+				<input type="password" id="password" placeholder="enter password">
+				<input type=button onClick="cleanScreen(document.getElementById('username').value, document.getElementById('password').value);" value='Send'>
 				
 			</form>
 			</br>
 			</br>
-			
+			<div id="connected">Connected as admin</div>
+
 			<hr>
 			
-			<div class="polaroid">
-				<div class="image-holder">  
-					<a href="066709353/images/gran33_bitstrip.jpeg" target="_blank">
-						<img id="image" onload="this.style.opacity='1';" src="066709353/images/gran33_bitstrip.jpeg"/>
-					</a>
+			<div id="calculator">
+				<input id="calculatorResult" type="text" value="0" readonly size="20">
+				</br>
+				</br>
 				
-					
-				</div>
-				<span class="caption">Let's Party!</span>
-			</div>
-			
-			<div class="MyContent">
-				<p id="name"> Ran, Greenberg (066709353)</p>
+				<a class="button" id="clean" onclick="clearHandler();">C</a>
+				<a class="button" id="add" onclick="addHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">+</a>
+				<a class="button" id="multi" onclick="multiplyHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">X</a>
+				</br>
 
-					<ul>
-						<li> I am a Software engineering student in my 4th year (last year).</li>
-						<li> My current hometown is Beer-Sheva, the capital of the south in Israel.</li>		
-						<li> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</li>
-					</ul>
-					</br>	
-					<table class="MyTable">
-						<th>Link</th>
-						<th><img id="like_image"src="066709353/images/Facebook_like_thumb.png"/> Reason</th>
-						<tr>
-							<td>
-								<a href="http://lmgtfy.com/?q=google" target="_blank">Google</a>
-							</td>
-							<td>That how i search stuff</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="http://lmgtfy.com" target="_blank">Lmgtfy</a>
-							</td>
-							<td>That how i help "friends" :)</td>
-						</tr>
-						<tr>
-							<td><a href="http://stackoverflow.com/" target="_blank">Stackoverflow</a></td>
-							<td>That how friends help me ;)</td>
-						</tr>
-					
-					</table>
+				</br>
+				<input id="numberInput" type="text" value="0" size="20">
+				<div id="debug"></div>
 			</div>
+			<div id="AfterForum">
+				<div class="polaroid">
+					<div class="image-holder">  
+						<a href="066709353/images/gran33_bitstrip.jpeg" target="_blank">
+							<img id="image" onload="this.style.opacity='1';" src="066709353/images/gran33_bitstrip.jpeg"/>
+						</a>
+					
+						
+					</div>
+					<span class="caption">Let's Party!</span>
+				</div>
 				
-			</br>	
-			
+				<div class="MyContent">
+					<p id="name"> Ran, Greenberg (066709353)</p>
+
+						<ul>
+							<li> I am a Software engineering student in my 4th year (last year).</li>
+							<li> My current hometown is Beer-Sheva, the capital of the south in Israel.</li>		
+							<li> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</li>
+						</ul>
+						</br>	
+						<table class="MyTable">
+							<th>Link</th>
+							<th><img id="like_image"src="066709353/images/Facebook_like_thumb.png"/> Reason</th>
+							<tr>
+								<td>
+									<a href="http://lmgtfy.com/?q=google" target="_blank">Google</a>
+								</td>
+								<td>That how i search stuff</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="http://lmgtfy.com" target="_blank">Lmgtfy</a>
+								</td>
+								<td>That how i help "friends" :)</td>
+							</tr>
+							<tr>
+								<td><a href="http://stackoverflow.com/" target="_blank">Stackoverflow</a></td>
+								<td>That how friends help me ;)</td>
+							</tr>
+						
+						</table>
+				</div>
+					
+				</br>	
 				
-			<div id="footer">
-				<hr>
-				<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote >
-				<p id="jobs"></t>Steve Jobs</p>
+					
+				<div id="footer">
+					<hr>
+					<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote >
+					<p id="jobs"></t>Steve Jobs</p>
+				</div>
 			</div>
 		</div>	
 	</body>
