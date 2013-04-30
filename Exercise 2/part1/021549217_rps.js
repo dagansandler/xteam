@@ -7,13 +7,13 @@ var rps = function(item1, item2) {
     if (item1 === undefined || rpsArray.indexOf(item1) === -1) {
         r = Math.floor(Math.random() * 3);
         item1 = rpsArray[r];
-        /*console.log("item1 was undefined and set to " + item1);*/
+        /*console.debug("item1 was undefined and set to " + item1);*/
     }
     /*player 2 input check*/
     if (item2 === undefined || rpsArray.indexOf(item2) === -1) {
         r = Math.floor(Math.random() * 3);
         item2 = rpsArray[r];
-        /*console.log("item2 was undefined and set to " + item2);*/
+        /*console.debug("item2 was undefined and set to " + item2);*/
     }
     /*game logic*/
     switch (item1) {

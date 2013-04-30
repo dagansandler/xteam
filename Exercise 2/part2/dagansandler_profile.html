@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
+	<script src="021549217_profile.js"></script>
 	<link rel="stylesheet" type="text/css" href="dagansandler_profile.css">
 	<title>Dagan's Profile</title>
 	<header>
-		<form id="login_form" action="#">
-			<span>Password:</span>
-			<input type="password" name="password" placeholder="password">
+		<form id="login_form" class="header" onsubmit="login(this)">
 			<span>Username:</span>
 			<input type="text" name="username" placeholder="username">
+			<span>Password:</span>
+			<input type="password" name="password" placeholder="password">
 			<input type="submit" value="Send">
 		</form>
+		<div id="logged_in" class="header">
+		</div>
 		<hr>
 	</header>
-	<div id="content">
+	<div id="profileContent" class="content">
 		<div class="polaroid" id="profilePic">
 			<div class="image-holder">  
 				<a href="http://octodex.github.com/xtocat/" target="_blank">
@@ -52,5 +55,21 @@
 		<div id="bottomQuote">
 			<p><q>Fear reaches only to the point where the unavoidable begins. From there it loses its meaning and all we have left is the hope that we're making the right decision...</q> - Fifth Mountain by Paulo Coelho</p>
 		</div>
+	</div>
+	<div id="calculatorContent" class="content">
+		<h1>My Calculator</h3>
+		<form id="calculator">
+			<div id="calculatorResult">
+				<input id="result" type="label" value="0" readonly size="20">
+			</div>
+			<div id="calculatorActions">
+				<a class="button" id="clean" onclick="clearHandler();">C</a>
+				<a class="button" id="add" onclick="addHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">+</a>
+				<a class="button" id="multi" onclick="multiplyHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">X</a>
+			</div>
+			<div id="calculatorInput">
+				<input id="numberInput" type="text" value="0" size="20">
+			</div>
+		</form>
 	</div>
 </html>
