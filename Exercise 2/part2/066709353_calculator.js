@@ -32,8 +32,10 @@ function inputChecker(item) {
 
 var Calculator = (function () {
 
+	var currentValue;
+
 	var Calculator = function() {
-		this.currentValue = 0;
+		currentValue = 0;
 	};
 	
 	Calculator.prototype.add = function(item){
@@ -72,7 +74,10 @@ function multiplyHandler(item){
 }
 
 function clearHandler(item){
+	
 	document.getElementById("calculatorResult").value = myCalc.clear();
+	myCalc.currentValue = 9;
+	document.getElementById("calculatorResult").value = myCalc.currentValue;
 }
 
 
