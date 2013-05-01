@@ -1,0 +1,7 @@
+Differences between Java Inheritance and Javascript Prototypes:
+
+While both create a notion of OO structure, there are a few differences:
+
+1) In Java, copying happens at compile time, where in JavaScript operations are stored in the prototype data structure, which is copied and modified at run time.
+2) JavaScript prototypes are shared between "inheriting" classes, meaning they expand that prototype rather than creating a new instance of it.
+3) Javascript prototypes can be redefined at runtime, and have immediate effect on existing objects, whereas Java classes can't be redefined to reflect changes on existing instances.
