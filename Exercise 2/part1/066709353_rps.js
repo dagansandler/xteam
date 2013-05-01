@@ -1,18 +1,30 @@
+/*
+"Good code is its own best documentation. As you're about to add a comment, ask yourself,
+'How can I improve the code so that this comment isn't needed?'
+Improve the code and then document it to make it even clearer."
+-- Steve McConnell, software engineer and author, from "Code Complete".
+*/
+
+//Main function as describe in the assignment
 function rps(item1, item2) {
+	//conver the input to uppercase
 	var oroginalItem1 = item1.toUpperCase();;
 	var oroginalItem2 = item2.toUpperCase();;
 	
+	//input check and generate random item in case the orignal one is illegal
 	item1 = generateIfNeeded(item1);
 	item2 = generateIfNeeded(item2);
 	
-	
+	//display on screen
 	document.getElementById("result1").innerHTML = "Item1:" + item1;
 	document.getElementById("result2").innerHTML = "Item2:" + item2;
 	
-
+	//get the winner
 	var winner = whoIsTheWinner(item1, item2);
 	
+	//display the winner on screen
 	document.getElementById("winner").innerHTML = winner;
+	
 	return winner;
 	
 }
@@ -35,8 +47,9 @@ function generateIfNeeded(item1) {
 	
 	return item11;
 }
-
+//help method, convert from number to rock, paper, scissors.
 function numberToRPS(number) {
+
 	if (number === 1){
 		return 'ROCK';
 	}
@@ -48,6 +61,7 @@ function numberToRPS(number) {
 	}
 }
 
+//This function deside who is the winner
 function whoIsTheWinner(item1, item2) {
 	var _rock = "ROCK";
 	var _paper = "PAPER";
