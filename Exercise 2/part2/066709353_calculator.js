@@ -35,22 +35,22 @@ var Calculator = (function () {
 	var currentValue;
 
 	var Calculator = function() {
-		currentValue = 0;
+		currentValue = 8;
 	};
 	
 	Calculator.prototype.add = function(item){
-		this.currentValue+=item;
-		return this.currentValue;
-	}
+		currentValue+=item;
+		return currentValue;
+	};
 	
 	Calculator.prototype.multiply = function(item){
-		this.currentValue*=item;
-		return this.currentValue;
+		currentValue*=item;
+		return currentValue;
 	};
 	
 	Calculator.prototype.clear = function(){
-		this.currentValue = 0;
-		return this.currentValue;
+		currentValue = 0;
+		return currentValue;
 	};
 	
 	return Calculator;
@@ -76,8 +76,6 @@ function multiplyHandler(item){
 function clearHandler(item){
 	
 	document.getElementById("calculatorResult").value = myCalc.clear();
-	myCalc.currentValue = 9;
-	document.getElementById("calculatorResult").value = myCalc.currentValue;
 }
 
 

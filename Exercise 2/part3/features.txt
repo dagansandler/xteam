@@ -1,0 +1,11 @@
+ Major features of javascript that does not exist in Java:
+ 
+ 1. JavaScript allows methods in an object to be redefined independently of its prototype 
+  methods in a Java object are tied to its class, and cannot be redefined at runtime.
+
+ 2. All JavaScript functions are variadic; 
+	Java functions are only variadic if explicitly marked.
+	
+ 3. Java code needs to be compiled while JavaScript code are all in text.
+ 
+ 4. JavaAcrips is dynamic typing, Java is static typing.
