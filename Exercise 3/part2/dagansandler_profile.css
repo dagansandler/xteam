@@ -72,11 +72,23 @@ hr {
 .textContent {
 	margin: 5em;
 }
-h1, h2 {
-	text-decoration: underline;
+.personalInfo {
+	margin: 1em;
 }
-p {
+.personalInfoTitle {
+	padding: 0;
+	margin: 0;
 	font-size: 18px;
+}
+.personalInfoData {
+	padding: 0;
+	margin: 0;
+	font-size: 16px;
+	display: none;
+}
+h1, h2 {
+	width: 350px;
+	text-decoration: underline;
 }
 th {
 	background-color:rgb(53, 151, 175);
@@ -102,6 +114,7 @@ td {
 	font-style: italic;
 }
 #bottomQuote {
+	font-size: 18px;
 	margin: 1em 5em;
 }
 #calculatorContent {

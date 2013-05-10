@@ -25,6 +25,9 @@ $(document).ready(function () {
     $("#myId, #myUsername").click(function () {
         $("#myId, #myUsername").toggle();
     });
+    $(".personalInfo").click(function() {
+        $(this).find(".personalInfoData").toggle();
+    });
     $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
         if($(this).val() !== 'admin') {
             var t = $(this);
