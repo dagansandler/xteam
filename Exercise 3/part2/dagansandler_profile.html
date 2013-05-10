@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<script src="jquery-1.9.1.min.js"></script>
+	<script src="021549217_profile.js"></script>
+	<link rel="stylesheet" type="text/css" href="dagansandler_profile.css">
+	<title>Dagan's Profile</title>
+	<header>
+		<form id="login_form" class="header" onsubmit="login();return false;">
+			<span>Username:</span>
+			<input type="text" name="username" placeholder="username">
+			<span>Password:</span>
+			<input type="password" name="password" placeholder="password">
+			<input type="submit" value="Send">
+		</form>
+		<div id="logged_in" class="header">
+		</div>
+		<hr>
+	</header>
+	<div id="profileContent" class="content">
+		<div class="polaroid" id="profilePic">
+			<div class="image-holder">  
+				<a href="http://octodex.github.com/xtocat/" target="_blank">
+					<img id="profileImage" src="021549217/images/dagan_bitstrip.png" onload="style.opacity='1';"/>
+				</a>
+			</div>
+			<span class="caption">Dagan Sandler</span>
+		</div>
+		<div class="textContent">
+			<h1>Dagan Sandler,</h1>
+			<h2>(021549217)</h2>
+			<span>
+				<p>Welcome to my personal website, designed for the Internet Technologies class</p>
+				<p>I am a 4th year student at Ben-Gurion University, studying Software Engineering.</p>
+				<p>I grew up in Metulla, all the way up north at the tip of the Upper Galilee</p>
+			</span>
+			<table id="favorite_websites">
+				<tr>
+					<th>Website</th>
+					<th>Why Go There</th>
+				</tr>
+				<tr>
+					<td><a href="http://www.codecademy.com/" target="_blank">Codecademy</a></td>
+					<td>Cool site with a lot of interactive programming classes</td>
+				</tr>
+				<tr>
+					<td><a href="http://www.hwzone.co.il" target="_blank">HWzone</a></td>
+					<td>Great Israeli tech news site</td>
+				</tr>
+				<tr>
+					<td><a href="http://www.9gag.com/" target="_blank">9gag</a></td>
+					<td>Because procrastination is inevitable</td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+		<div id="bottomQuote">
+			<p><q>Fear reaches only to the point where the unavoidable begins. From there it loses its meaning and all we have left is the hope that we're making the right decision...</q> - Fifth Mountain by Paulo Coelho</p>
+		</div>
+	</div>
+	<div id="calculatorContent" class="content">
+		<h1>My Calculator</h3>
+		<form id="calculator">
+			<div id="calculatorResult">
+				<input id="result" type="label" value="0" readonly size="20">
+			</div>
+			<div id="calculatorActions">
+				<a class="button" id="clean" onclick="clearHandler();">C</a>
+				<a class="button" id="add" onclick="addHandler();">+</a>
+				<a class="button" id="multi" onclick="multiplyHandler();">X</a>
+			</div>
+			<div id="calculatorInput">
+				<input id="numberInput" type="text" value="0" size="20">
+			</div>
+		</form>
+	</div>
+</html>

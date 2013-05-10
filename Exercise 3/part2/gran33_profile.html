@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<script src="066709353_calculator.js"></script>
+		<title> Ran Greenberg Profile </title>
+		<link rel="stylesheet" type="text/css" href="gran33_profile.css">
+	</head>
+
+	<body>
+		<div id="MyBody">
+			<form id="MyForm">
+				<span>Username:</span>
+				<input id="username" placeholder="enter username">
+				<span id="password_text">Password:</span>
+				<input type="password" id="password" placeholder="enter password">
+				<input type=button onClick="cleanScreen(document.getElementById('username').value, document.getElementById('password').value);" value='Send'>
+				
+			</form>
+			</br>
+			</br>
+			<div id="connected">Connected as admin</div>
+
+			<hr>
+			
+			<div id="calculator">
+				<div id="calculatorResult_div">
+				<input id="calculatorResult" type="text" value="0" readonly size="20">
+				</div>
+				
+				<div id="calculator_buttons">
+					<a class="button" id="clean" onclick="clearHandler();">C</a>
+					<a class="button" id="add" onclick="addHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">+</a>
+					<a class="button" id="multi" onclick="multiplyHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">X</a>
+				</div>
+
+				<div id="numberInput_div">
+					<input id="numberInput" type="text" value="0" size="20">
+				</div>
+				<div id="debug"></div>
+			</div>
+			<div id="AfterForum">
+				<div class="polaroid">
+					<div class="image-holder">  
+						<a href="066709353/images/gran33_bitstrip.jpeg" target="_blank">
+							<img id="image" onload="this.style.opacity='1';" src="066709353/images/gran33_bitstrip.jpeg"/>
+						</a>
+					
+						
+					</div>
+					<span class="caption">Let's Party!</span>
+				</div>
+				
+				<div class="MyContent">
+					<p id="name"> Ran, Greenberg (066709353)</p>
+
+						<ul>
+							<li> I am a Software engineering student in my 4th year (last year).</li>
+							<li> My current hometown is Beer-Sheva, the capital of the south in Israel.</li>		
+							<li> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</li>
+						</ul>
+						</br>	
+						<table class="MyTable">
+							<th>Link</th>
+							<th><img id="like_image"src="066709353/images/Facebook_like_thumb.png"/> Reason</th>
+							<tr>
+								<td>
+									<a href="http://lmgtfy.com/?q=google" target="_blank">Google</a>
+								</td>
+								<td>That how i search stuff</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="http://lmgtfy.com" target="_blank">Lmgtfy</a>
+								</td>
+								<td>That how i help "friends" :)</td>
+							</tr>
+							<tr>
+								<td><a href="http://stackoverflow.com/" target="_blank">Stackoverflow</a></td>
+								<td>That how friends help me ;)</td>
+							</tr>
+						
+						</table>
+				</div>
+					
+				</br>	
+				
+					
+				<div id="footer">
+					<hr>
+					<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote >
+					<p id="jobs"></t>Steve Jobs</p>
+				</div>
+			</div>
+		</div>	
+	</body>
+
+</html>
