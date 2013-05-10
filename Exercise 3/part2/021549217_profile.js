@@ -29,13 +29,29 @@ $(document).ready(function () {
         $(this).find(".personalInfoData").toggle();
     });
     $("#profilePic").hover(function() {
-        rotate($(this), '-20deg');
+        $(this).addClass('leftTilt');
+        $(this).removeClass('rightTilt');
         $(this).find("#profileImage").attr('src', '021549217/images/dagan_octocat.jpg');
         $(this).find(".caption").text("X-tocat");
     }, function() {
-        rotate($(this), '20deg');
+        $(this).addClass('rightTilt');
+        $(this).removeClass('leftTilt');
         $(this).find("#profileImage").attr('src', '021549217/images/dagan_bitstrip.png');
         $(this).find(".caption").text("Dagan Sandler");
+    });
+    $("#bottomQuote").click(function() {
+        if($("#barneyQuote").css('display') === 'none') {
+            $("#barneyQuote").toggle();
+            $("#barney1").show();
+            $("#barney2").hide();
+            setTimeout(function() {
+                $("#barney1").hide();
+                $("#barney2").show();
+            }, 3000);
+        }
+    });
+    $("#barneyQuote").click(function() {
+        $("#barneyQuote, #barney1, #barney2").hide();
     });
     $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
         if($(this).val() !== 'admin') {
@@ -59,12 +75,6 @@ $(document).ready(function () {
         }
     });
 });
-
-function rotate(obj, degree) {
-    obj.css({'-webkit-transform':'rotate(' + degree + ') translate3d( 0, 0, 0)',
-                            '-moz-transform':'rotate(' + degree + ')',
-                            'transform':'rotate(' + degree + ')'});
-};
 
 /* login function. takes the form and extracts the values */
 function login() {

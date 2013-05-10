@@ -29,14 +29,23 @@ hr {
 	border: 0;
 }
 #profilePic {
+	margin: 5em;
+	margin-right: 10%;
+	float:right;
+}
+.rightTilt {
 	transform:rotate(20deg);
 	-ms-transform:rotate(20deg); /* IE 9 */
 	-moz-transform:rotate(20deg);/* Firefox */
 	-webkit-transform: rotate(20deg) translate3d( 0, 0, 0);/* Safari and Chrome */
 	-o-transform:rotate(20deg); /* Opera */
-	margin: 5em;
-	margin-right: 10%;
-	float:right;
+}
+.leftTilt {
+	transform:rotate(-20deg);
+	-ms-transform:rotate(-20deg); /* IE 9 */
+	-moz-transform:rotate(-20deg);/* Firefox */
+	-webkit-transform: rotate(-20deg) translate3d( 0, 0, 0);/* Safari and Chrome */
+	-o-transform:rotate(-20deg); /* Opera */
 }
 .polaroid {
 	width:250px;
@@ -116,6 +125,14 @@ td {
 #bottomQuote {
 	font-size: 18px;
 	margin: 1em 5em;
+}
+#barneyQuote {
+	display: none;
+}
+#barney1, #barney2 {
+	font-size: 18px;
+	margin: 1em 5em;
+	display: none;
 }
 #calculatorContent {
 	width: 700px ;
