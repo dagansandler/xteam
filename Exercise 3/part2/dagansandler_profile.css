@@ -105,7 +105,7 @@ table, th, td {
 	margin: 2em 0em;
 	height: 80px;
 }
-.button, a.button 
+.button 
 {
 	margin-right:17px;
 	border: 1px solid rgba(0,0,0,0.3);
@@ -127,17 +127,12 @@ table, th, td {
 	box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 1px 0 0 rgba(255,255,255,0.5), inset 0 -3px 0 0 rgba(0,0,0,0.5);
 	text-shadow: 0 1px rgba(255,255,255,0.6);
 }
-button::-moz-focus-inner, a.button::-moz-focus-inner 
-{
-	padding:0;
-	border:0;
-}
-button:hover, a.button:hover 
+.button.hoveredButton
 {
 	background: #cbcbcb;
 	cursor: pointer;
 }
-button:active, a.button:active 
+.button.activeButton
 {
 	background: #ccc;
 	padding: 21px 34px 20px; /* Bump down text–Thanks to Jason for the suggestion */
@@ -145,21 +140,6 @@ button:active, a.button:active
 	-webkit-box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 -1px 0 0 rgba(255,255,255,0.5), inset 0 2px 5px 0 rgba(0,0,0,0.2);
 	box-shadow: 0 0 0 5px rgba(255,255,255,0.3), inset 0 -1px 0 0 rgba(255,255,255,0.5), inset 0 2px 5px 0 rgba(0,0,0,0.2);
 	text-shadow: none;
-}
-button[disabled] 
-{
-	background: #ddd;
-	color: #ccc;
-	cursor: default;
-	-moz-box-shadow: 0 0 0 5px rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.5);
-	-webkit-box-shadow: 0 0 0 5px rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.5);
-	box-shadow: 0 0 0 5px rgba(255,255,255,0.2), inset 0 -1px 0 0 rgba(0,0,0,0.5);
-	text-shadow: none;
-}
-button[disabled]:active 
-{
-	background: #ddd;
-	color: #ccc;
 }
 input[type=text], input[type=password], input[type=label], textarea 
 {
@@ -173,7 +153,7 @@ input[type=text], input[type=password], input[type=label], textarea
 	border: 1px solid #DDDDDD;
 }
  
-input[type=text]:focus, input[type=password]:focus, textarea:focus 
+.focusedInput
 {
 	box-shadow: 0 0 30px rgba(81, 203, 238, 1);
 	padding: 3px 0px 3px 3px;

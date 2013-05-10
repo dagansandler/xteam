@@ -1,5 +1,46 @@
 
 /* *********** Genereal Profile Section *************** */
+$(document).ready(function () {
+    $("a.button").hover(function() {
+        $(this).addClass("hoveredButton");
+    }, function() {
+        $(this).removeClass("hoveredButton");
+    });
+    $("a.button").mousedown(function() {
+        $(this).addClass("activeButton");
+    }).bind('mouseup mouseleave', function() {
+        $(this).removeClass("activeButton");
+    });
+    $("input[type=text], input[type=password], textarea").focusin(function() {
+        $(this).addClass("focusedInput");
+    }).bind('focusout', function() {
+        $(this).removeClass("focusedInput");
+    });
+    
+    $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
+        if($(this).val() !== 'admin') {
+            var t = $(this);
+            setTimeout(function() {
+                t.focus();
+            },1);
+        } else {
+            setTimeout(function() {
+                if($("#login_form input[name=password]").val() !== 'admin') {
+                    $("#login_form input[name=password]").focus().bind('focusout', function() {
+                        if($(this).val() !== 'admin') {
+                            var t = $(this);
+                            setTimeout(function() {
+                                t.focus();
+                            },1);
+                        }
+                    });
+                }
+            },1);
+        }
+    });
+});
+
+
 /* login function. takes the form and extracts the values */
 function login() {
     var username = $("#login_form input[name=username]").val();
@@ -84,5 +125,4 @@ function multiplyHandler(item){
 /*handle clear action*/
 function clearHandler(){
 	$("#result").val(myCalc.clear());
-    
 }
