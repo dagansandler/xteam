@@ -111,6 +111,9 @@ td {
 	float:center;
 	display:none;
 }
+#myUsername {
+	display: none;
+}
 #calculatorActions {
 	margin: 2em 0em;
 	height: 80px;

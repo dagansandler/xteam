@@ -21,7 +21,10 @@ $(document).ready(function () {
         $(this).addClass("hoveredTableRow");
     }, function() {
         $(this).removeClass("hoveredTableRow");
-    });    
+    });
+    $("#myId, #myUsername").click(function () {
+        $("#myId, #myUsername").toggle();
+    });
     $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
         if($(this).val() !== 'admin') {
             var t = $(this);
