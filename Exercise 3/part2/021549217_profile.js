@@ -28,6 +28,15 @@ $(document).ready(function () {
     $(".personalInfo").click(function() {
         $(this).find(".personalInfoData").toggle();
     });
+    $("#profilePic").hover(function() {
+        rotate($(this), '-20deg');
+        $(this).find("#profileImage").attr('src', '021549217/images/dagan_octocat.jpg');
+        $(this).find(".caption").text("X-tocat");
+    }, function() {
+        rotate($(this), '20deg');
+        $(this).find("#profileImage").attr('src', '021549217/images/dagan_bitstrip.png');
+        $(this).find(".caption").text("Dagan Sandler");
+    });
     $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
         if($(this).val() !== 'admin') {
             var t = $(this);
@@ -51,6 +60,11 @@ $(document).ready(function () {
     });
 });
 
+function rotate(obj, degree) {
+    obj.css({'-webkit-transform':'rotate(' + degree + ') translate3d( 0, 0, 0)',
+                            '-moz-transform':'rotate(' + degree + ')',
+                            'transform':'rotate(' + degree + ')'});
+};
 
 /* login function. takes the form and extracts the values */
 function login() {
