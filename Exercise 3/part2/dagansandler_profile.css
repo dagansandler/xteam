@@ -80,16 +80,26 @@ p {
 }
 th {
 	background-color:rgb(53, 151, 175);
+	border: 1px solid;
+	border-color: black;
 }
 td {
+	width: 300px;
 	padding: 5px;
+	border: 1px solid;
+	border-color: black;
 }
-table, th, td {
+#favorite_websites{
 	border-collapse: collapse;
-	width: 500px;
+	width: 600px;
 	margin: 5em;
 	text-align: center;
 	border: 1px solid;
+	border-color: black;
+}
+.hoveredTableRow td, .hoveredTableRow a {
+	color: orange;
+	font-style: italic;
 }
 #bottomQuote {
 	margin: 1em 5em;

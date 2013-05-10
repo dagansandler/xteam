@@ -17,6 +17,11 @@ $(document).ready(function () {
         $(this).removeClass("focusedInput");
     });
     
+    $("tr").hover(function() {
+        $(this).addClass("hoveredTableRow");
+    }, function() {
+        $(this).removeClass("hoveredTableRow");
+    });    
     $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
         if($(this).val() !== 'admin') {
             var t = $(this);
