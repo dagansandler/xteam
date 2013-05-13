@@ -9,16 +9,6 @@ function HttpRequest(method, uri, resource, resPath, headers, body) {
 	this.body = body;
 }
 
-var testGeneralStructure = function(requestString) {
-	/*this method should test the general structure of the string
-		using a simple regex.*/
-	return false;
-};
-
-var getHeaders = function(headersString) {
-	/*this method should return the headers as a key value mapping*/
-};
-
 function parseRequest(requestString) {
 	var method;
 	var uri;
@@ -27,32 +17,35 @@ function parseRequest(requestString) {
 	var headers;
 	var body;
 	
-	if(testGeneralStructure(requestString)) {
-		var requestArray = reuest.split("\r\n");
-		var requestLine = requestArray[0];
-		var requestLineArray = requestLine.split(" ");
-		if(requestLineArray.length !== 3) {
-			break;
-		}
-		method = requestLineArray[0];
-		if(method !== 'GET' && method !== 'POST') {
-			break;
-		}
-		uri = requestLineArray[1];
-		resource = uri.substring(uri.lastIndexOf("/"));
-		resPath = uri.substring(0, uri.lastIndexOf("/"));
-		headersString = requestArray[1];
-		headers = getHeaders(headersString);
-		if(requestArray[2] !== ')') {
-			break;
-		}
-		body = requestArray[3];
-		
-		
-		/*if we didn't return at some point the request was parsed*/
-		return new HttpRequest(method, uri, resource, resPath, headers, body);
+	var reqLineEnd = requestString.indexOf("\r\n");
+	var requestLine = requestString.substring(0, reqLineEnd);
+	var requestLineArray = requestLine.split(/[ ]+/);
+	if(requestLineArray.length !== 3) {
+		return new Object();
 	}
-	return new Object();
+	method = requestLineArray[0];
+	if(method !== 'GET' && method !== 'POST') {
+		return new Object();
+	}
+	uri = requestLineArray[1];
+	resource = uri.substring(uri.lastIndexOf("/") + 1);
+	resPath = uri.substring(0, uri.lastIndexOf("/"));
+	
+	var headersEnd = requestString.indexOf("\r\n\r\n");
+	var headersArray = requestString.substring(reqLineEnd+2, headersEnd).split("\r\n");
+	headers = {};
+	for(var h in headersArray) {
+		var hPair = headersArray[h].split(/[ ]*:[ ]*(.+)?/, 2);
+		if(hPair.length != 2 || hPair[0] === "" || hPair[0] === undefined) {
+			return new Object();
+		}
+		headers[hPair[0]] = hPair[1];
+	}
+	
+	body = requestString.substring(headersEnd+4);
+	
+	/*if we didn't return at some point the request was parsed*/
+	return new HttpRequest(method, uri, resource, resPath, headers, body);
 
 }
 
