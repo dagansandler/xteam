@@ -1,32 +1,19 @@
 
 /* *********** Genereal Profile Section *************** */
 $(document).ready(function () {
-    $("a.button").hover(function() {
-        $(this).addClass("hoveredButton");
-    }, function() {
-        $(this).removeClass("hoveredButton");
-    });
-    $("a.button").mousedown(function() {
-        $(this).addClass("activeButton");
-    }).bind('mouseup mouseleave', function() {
-        $(this).removeClass("activeButton");
-    });
+    var authorized = false;
+    disableLinks();
+    
+    /*register events for hovered items*/
     $("input[type=text], input[type=password], textarea").focusin(function() {
         $(this).addClass("focusedInput");
     }).bind('focusout', function() {
         $(this).removeClass("focusedInput");
     });
-    
     $("tr").hover(function() {
         $(this).addClass("hoveredTableRow");
     }, function() {
         $(this).removeClass("hoveredTableRow");
-    });
-    $("#myId, #myUsername").click(function () {
-        $("#myId, #myUsername").toggle();
-    });
-    $(".personalInfo").click(function() {
-        $(this).find(".personalInfoData").toggle();
     });
     $("#profilePic").hover(function() {
         $(this).addClass('leftTilt');
@@ -39,23 +26,66 @@ $(document).ready(function () {
         $(this).find("#profileImage").attr('src', '021549217/images/dagan_bitstrip.png');
         $(this).find(".caption").text("Dagan Sandler");
     });
+    /*register events for calculator buttons*/
+    $("a.button").hover(function() {
+        $(this).addClass("hoveredButton");
+    }, function() {
+        $(this).removeClass("hoveredButton");
+    });
+    $("a.button").mousedown(function() {
+        $(this).addClass("activeButton");
+    }).bind('mouseup mouseleave', function() {
+        $(this).removeClass("activeButton");
+    });
+    $("#clean").click(function() {
+        clearHandler();
+    });
+    $("#add").click(function() {
+         addHandler();
+    });
+    $("#multi").click(function() {
+         multiplyHandler();
+    });
+    
+    /*register clicking events*/
+    $("#myId, #myUsername").click(function () {
+        if(authorized) {
+            $("#myId, #myUsername").toggle();
+        }
+    });
+    $(".personalInfo").click(function() {
+        if(authorized) {
+            $(this).find(".personalInfoData").toggle();
+        }
+    });
     $("#bottomQuote").click(function() {
-        if($("#barneyQuote").css('display') === 'none') {
-            $("#barneyQuote").toggle();
-            $("#barney1").show();
-            $("#barney2").hide();
-            setTimeout(function() {
-                $("#barney1").hide();
-                $("#barney2").show();
-            }, 3000);
+        if(authorized) {
+            if($("#barneyQuote").css('display') === 'none') {
+                $("#barneyQuote").toggle();
+                $("#barney1").show();
+                $("#barney2").hide();
+                setTimeout(function() {
+                    $("#barney1").hide();
+                    $("#barney2").show();
+                }, 3000);
+            }
         }
     });
     $("#barneyQuote").click(function() {
-        $("#barneyQuote, #barney1, #barney2").hide();
+        if(authorized) {
+            $("#barneyQuote, #barney1, #barney2").hide();
+        }
+    });
+    
+    $("#login_form").submit(function() {
+        login();
+        return false;
     });
     $("#login_form input[name=username]").focus().bind('focusout keyup', function() {
         if($(this).val() !== 'admin') {
             var t = $(this);
+            authorized = false;
+            disableLinks();
             setTimeout(function() {
                 t.focus();
             },1);
@@ -65,9 +95,14 @@ $(document).ready(function () {
                     $("#login_form input[name=password]").focus().bind('focusout', function() {
                         if($(this).val() !== 'admin') {
                             var t = $(this);
+                            authorized = false;
+                            disableLinks();
                             setTimeout(function() {
                                 t.focus();
                             },1);
+                        } else {
+                            authorized = true;
+                            enableLinks();
                         }
                     });
                 }
@@ -75,6 +110,25 @@ $(document).ready(function () {
         }
     });
 });
+
+function disableLinks() {
+    /*disable links*/
+    $("a").each(function(){
+        if($(this).attr("href") !== undefined) {
+            $(this).bind('click', function(e) {
+                e.preventDefault();
+            });
+        }
+    });
+}
+
+function enableLinks() {
+    $("a").each(function() {
+        if($(this).attr("href") !== undefined) {
+            $(this).unbind('click');
+        }
+    });
+}
 
 /* login function. takes the form and extracts the values */
 function login() {
