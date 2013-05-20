@@ -2,7 +2,9 @@
 <html>
 
 	<head>
+		<script src="jquery-1.9.1.min.js"></script>
 		<script src="066709353_calculator.js"></script>
+		<script src="066709353_profile.js"></script>
 		<title> Ran Greenberg Profile </title>
 		<link rel="stylesheet" type="text/css" href="gran33_profile.css">
 	</head>
@@ -40,39 +42,48 @@
 				<div id="debug"></div>
 			</div>
 			<div id="AfterForum">
-				<div class="polaroid">
+				<div id="profilePic" class="polaroid rightTilt">
 					<div class="image-holder">  
-						<a href="066709353/images/gran33_bitstrip.jpeg" target="_blank">
+						<a href="066709353/images/bart_simpson.jpg" target="_blank">
 							<img id="image" onload="this.style.opacity='1';" src="066709353/images/gran33_bitstrip.jpeg"/>
 						</a>
 					
 						
 					</div>
-					<span class="caption">Let's Party!</span>
+					<span class="caption" id="captionText">Let's Party!</span>
 				</div>
 				
 				<div class="MyContent">
-					<p id="name"> Ran, Greenberg (066709353)</p>
+					<p id="name"> Ran, Greenberg</p>
+					<p id="id">(066709353)</p>
+					<p id="username_git">(gran33)</p>
 
 						<ul>
-							<li> I am a Software engineering student in my 4th year (last year).</li>
-							<li> My current hometown is Beer-Sheva, the capital of the south in Israel.</li>		
-							<li> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</li>
+							<li class="listInfo">
+								<p class="title">Who am i?</p>
+								<p class="toExpand">I am a Software engineering student in my 4th year (last year).</p>
+							</li>
+							
+							<li class="listInfo">
+								<p class="title">Where do i live?</p>
+								<p class="toExpand"> My current hometown is Beer-Sheva, the capital of the south in Israel.</p>
+							</li>
+							
+							<li class="listInfo">
+								<p class="title">What's my favorite basketball team?</p>
+								<p class="toExpand"> My favorite bastekball team in israel is Maccabi "Electra" Tel-Aviv.</p>
+							</li>
 						</ul>
 						</br>	
 						<table class="MyTable">
 							<th>Link</th>
 							<th><img id="like_image"src="066709353/images/Facebook_like_thumb.png"/> Reason</th>
 							<tr>
-								<td>
-									<a href="http://lmgtfy.com/?q=google" target="_blank">Google</a>
-								</td>
+								<td><a href="http://lmgtfy.com/?q=google" target="_blank">Google</a></td>
 								<td>That how i search stuff</td>
 							</tr>
 							<tr>
-								<td>
-									<a href="http://lmgtfy.com" target="_blank">Lmgtfy</a>
-								</td>
+								<td><a href="http://lmgtfy.com" target="_blank">Lmgtfy</a></td>
 								<td>That how i help "friends" :)</td>
 							</tr>
 							<tr>
@@ -88,8 +99,10 @@
 					
 				<div id="footer">
 					<hr>
-					<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote >
+					<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote>
 					<p id="jobs"></t>Steve Jobs</p>
+					<blockquote id="anotherQuote">"Barney Stinson: Legen… wait for it…"</blockquote>
+					<blockquote id="anotherQuoteFull">"Barney Stinson: Legen… wait for it… dary. LEGENDARY!"</blockquote>
 				</div>
 			</div>
 		</div>	

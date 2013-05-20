@@ -48,8 +48,16 @@ body
 
 }
 
-#name
+#name, #id
 {
+	font-weight: bold;
+	font-size:30px;
+	padding-left:20px;
+	text-shadow: 2px 2px 2px #374683;
+}
+#username_git
+{
+	display:none;
 	font-weight: bold;
 	font-size:30px;
 	padding-left:20px;
@@ -59,25 +67,54 @@ body
 ul
 {
 	font-size:20px;
-	line-height:150%;
+	line-height:110%;
 }
 
-.MyTable,td,th 
+.toExpand
+{
+	display:none;
+	font-size:15px;
+	padding:0px;
+}
+
+.MyTable 
 {
 
 	border:1px solid;
 	border-collapse:collapse;
 	text-align:center;
-	width:650px;
+	width:600px;
 	font-size:20px;
-	padding:10px;
 	line-height:80%;
+	padding:5px 0px;
+	border-color: black;
 
 }
 
-.td
+th
 {
-	font-size:50px;
+	border:1px solid;
+	border-collapse:collapse;
+	text-align:center;
+	width:300px;
+	font-size:20px;
+	line-height:80%;
+	padding:5px 0px;
+	border-color: black;
+}
+
+td
+{
+	width: 300px;
+	border: 1px solid;
+	padding:5px 0px;
+	border-color: black;
+}
+
+.onRow td, .onRow a
+{
+	color: orange;
+	font-style: italic;
 }
 	
 .MyTable
@@ -98,11 +135,25 @@ hr
 	width:300px;
 	height:400px;
 	float:right;
+}
+
+
+.rightTilt
+{
 	transform:rotate(10deg);
 	-ms-transform:rotate(10deg); /* IE 9 */
 	-moz-transform:rotate(10deg); /* Firefox */
 	-webkit-transform:rotate(10deg); /* Safari and Chrome */
 	-o-transform:rotate(10deg); /* Opera */
+}
+
+.leftTilt
+{
+	transform:rotate(-10deg);
+	-ms-transform:rotate(-10deg); /* IE 9 */
+	-moz-transform:rotate(-10deg); /* Firefox */
+	-webkit-transform:rotate(-10deg); /* Safari and Chrome */
+	-o-transform:rotate(-10deg); /* Opera */
 }
 
 .image-holder 
@@ -177,6 +228,11 @@ hr
 	font-size: 13px;
 	display:inline;
 	padding-left:0px;
+}
+
+#anotherQuote, #anotherQuoteFull
+{
+	display:none;
 }
 
 #calculator
