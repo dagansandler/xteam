@@ -9,10 +9,10 @@ Improve the code and then document it to make it even clearer."
 function cleanScreen(username, password) {
 	
 	if(username === "admin" && password === "admin") {
-		document.getElementById("AfterForum").style.display = 'none';
-		document.getElementById("MyForm").style.display = 'none';
-		document.getElementById("calculator").style.display='block';
-		document.getElementById("connected").style.display='block';
+		$("#AfterForum").hide();
+		$("#MyForm").hide();
+		$("#calculator").show();
+		$("#connected").show();
 	}
 	
 }
@@ -72,7 +72,7 @@ var myCalc = new Calculator();
 function addHandler(item){
 	var toAdd = inputChecker(item);
 	if (toAdd != "false") {
-		document.getElementById("calculatorResult").value = myCalc.add(toAdd);
+		$("#calculatorResult").val(myCalc.add(toAdd));
 	}    
 }
 
@@ -80,13 +80,13 @@ function addHandler(item){
 function multiplyHandler(item){
 	var toAdd = inputChecker(item);
 	if (toAdd != "false") {
-		document.getElementById("calculatorResult").value = myCalc.multiply(toAdd);
+		$("#calculatorResult").val(myCalc.multiply(toAdd));
 	}    
 }
 
 //handler to be access from the HTML file
 function clearHandler(item){
-	document.getElementById("calculatorResult").value = myCalc.clear();
+	$("#calculatorResult").val(myCalc.clear()); 
 }
 
 

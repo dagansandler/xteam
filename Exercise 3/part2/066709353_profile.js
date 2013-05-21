@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	
 	//2.1
-	
+	$("#username").focus();
 	
 	//2.2
 	

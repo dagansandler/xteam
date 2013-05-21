@@ -27,7 +27,7 @@
 			
 			<div id="calculator">
 				<div id="calculatorResult_div">
-				<input id="calculatorResult" type="text" value="0" readonly size="20">
+				<input class="io" id="calculatorResult" type="text" value="0" readonly size="20">
 				</div>
 				
 				<div id="calculator_buttons">
@@ -36,7 +36,7 @@
 					<a class="button" id="multi" onclick="multiplyHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">X</a>
 				</div>
 
-				<div id="numberInput_div">
+				<div class="io" id="numberInput_div">
 					<input id="numberInput" type="text" value="0" size="20">
 				</div>
 				<div id="debug"></div>
