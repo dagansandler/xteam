@@ -1,10 +1,31 @@
 <html>
-
-<head>
 	<script src="gran33_httpParser.js"></script>
-</head>
-
-<body>
-	<p>I'm the body</p>
-</body>
+	
+	<div>
+		<h1>Http Request Parsing</h1>
+		<p>To parse an http request, call "parseRequest" function from the console with an http request string</p>
+		<p>The function will parse your request as follows:</p>
+		<ol>
+			<li>Check the argument is defined and is a string</li>
+			<li>Request line parsing
+				<ul>
+					<li>Find the request line ending (ends with CRLF)</li>
+					<li>Split the request line by spaces</li>
+					<li>Save the request line method and uri</li>
+					<li>Cut out the resource and the resPath from the URI</li>
+				</ul>
+			</li>
+			<li>Headers Parsing
+				<ul>
+					<li>Find the end of the headers (two CRLFs)</li>
+					<li>Split the headers by CRLF</li>
+					<li>For each header, split by ':' and store key and value into the header array</li>
+				</ul>
+			</li>
+			<li>The body is all that's left!</li>
+		</ol>
+		<h3>The described parsing returns an empty Object whenever it fails to parse some part of the request.</h3>
+		<p>An example http request:</p>
+		<p>"POST /xteam/index.html HTTP/1.1\r\nheader1:value1\r\nheader2:value2\r\nheader3:value3\r\n\r\nThis is the request message!"</p>
+	</div>
 </html>

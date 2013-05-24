@@ -16,7 +16,7 @@
 				<input id="username" placeholder="enter username">
 				<span id="password_text">Password:</span>
 				<input type="password" id="password" placeholder="enter password">
-				<input type=button onClick="cleanScreen(document.getElementById('username').value, document.getElementById('password').value);" value='Send'>
+				<input id="send" type=button value='Send'>
 				
 			</form>
 			</br>
@@ -31,9 +31,9 @@
 				</div>
 				
 				<div id="calculator_buttons">
-					<a class="button" id="clean" onclick="clearHandler();">C</a>
-					<a class="button" id="add" onclick="addHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">+</a>
-					<a class="button" id="multi" onclick="multiplyHandler(document.getElementById('numberInput').value.replace(/^0+/, ''));">X</a>
+					<a class="button" id="clean">C</a>
+					<a class="button" id="add">+</a>
+					<a class="button" id="multi">X</a>
 				</div>
 
 				<div class="io" id="numberInput_div">
@@ -101,8 +101,11 @@
 					<hr>
 					<blockquote id="quote" cite="http://www.goodreads.com/quotes/tag/steve-jobs">“Have the courage to follow your heart and intuition. They somehow already know what you truly want to become. Everything else is secondary.”</blockquote>
 					<p id="jobs"></t>Steve Jobs</p>
+				
 					<blockquote id="anotherQuote">"Barney Stinson: Legen… wait for it…"</blockquote>
 					<blockquote id="anotherQuoteFull">"Barney Stinson: Legen… wait for it… dary. LEGENDARY!"</blockquote>
+						
+						
 				</div>
 			</div>
 		</div>	

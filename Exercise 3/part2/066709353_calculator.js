@@ -6,16 +6,14 @@ Improve the code and then document it to make it even clearer."
 */
 
 //this method clean the profile screen (excluding the header) and show the calculator
-function cleanScreen(username, password) {
-	
-	if(username === "admin" && password === "admin") {
+function cleanScreen() {
 		$("#AfterForum").hide();
 		$("#MyForm").hide();
 		$("#calculator").show();
 		$("#connected").show();
-	}
-	
 }
+	
+
 
 //check if str is natural number
 function isNaturalNumber (str) {
