@@ -13,6 +13,10 @@ var app = app || {};
 		// and ensure that each todo created has `title` and `completed` keys.
 		defaults: {
 			title: '',
+			owner: '',
+			time: '',
+			selected: false, /* Added: True if the current model content is 
+								shown on the extended view, false otherwise */
 			completed: false
 		},
 
@@ -21,6 +25,11 @@ var app = app || {};
 			this.save({
 				completed: !this.get('completed')
 			});
+		},
+		
+		/* Toggle selected attribute */
+		toggleShow: function () {
+			this.set('selected', !this.get('selected'));
 		}
 	});
 })();

@@ -27,7 +27,7 @@ body {
 	color: #4d4d4d;
 	width: 550px;
 	margin: 0 auto;
-	-webkit-font-smoothing: antialiased;
+	-webkit-moothing: antialiased;
 	-moz-font-smoothing: antialiased;
 	-ms-font-smoothing: antialiased;
 	-o-font-smoothing: antialiased;
@@ -155,6 +155,10 @@ label[for='toggle-all'] {
 	display: none;
 }
 
+.todoOwner {
+	font-size:16px;
+}
+
 #toggle-all {
 	position: absolute;
 	top: -42px;
@@ -196,14 +200,14 @@ label[for='toggle-all'] {
 	padding: 0;
 }
 
-#todo-list li.editing .edit {
+#todo-list li.editingTitle .edit.title, #todo-list li.editingOwner .edit.owner {
 	display: block;
 	width: 506px;
 	padding: 13px 17px 12px 17px;
 	margin: 0 0 0 43px;
 }
 
-#todo-list li.editing .view {
+#todo-list li.editingTitle .view, #todo-list li.editingOwner .view{
 	display: none;
 }
 
@@ -241,7 +245,7 @@ label[for='toggle-all'] {
 
 #todo-list li label {
 	word-break: break-word;
-	padding: 15px;
+	padding: 8px;
 	margin-left: 45px;
 	display: block;
 	line-height: 1.2;
@@ -275,7 +279,43 @@ label[for='toggle-all'] {
 	transition: all 0.2s;
 }
 
-#todo-list li .destroy:hover {
+#todo-list li .show {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 40px;
+	bottom: 0;
+	width: 40px;
+	height: 40px;
+	margin: auto 0;
+	font-size: 22px;
+	color: #a88a8a;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	-ms-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+#extendedView {
+	word-break: break-word;
+	margin:0;
+	padding:10px 15px;
+	background: #fff;
+	background: rgba(255, 255, 255, 0.9);
+	border: black 1px solid;
+	border-right:0px;
+	border-radius: 10px 0px 0px 10px;
+	font-size: 15px;
+	width: 150px;
+	position:fixed;
+	right:0px;
+	top:170px;
+}
+#extendedView  span{
+	font-weight: bold;
+
+}
+#todo-list li .destroy:hover, #todo-list li .show:hover {
 	text-shadow: 0 0 1px #000,
 				 0 0 10px rgba(199, 107, 107, 0.8);
 	-webkit-transform: scale(1.3);
@@ -289,7 +329,11 @@ label[for='toggle-all'] {
 	content: '✖';
 }
 
-#todo-list li:hover .destroy {
+#todo-list li .show:after {
+	content: 'S';
+}
+
+#todo-list li:hover .destroy, #todo-list li:hover .show {
 	display: block;
 }
 

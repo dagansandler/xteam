@@ -12,13 +12,15 @@
 				<h1>todos</h1>
 				<div id="div-todo">
 					<input id="new-todo" placeholder="What needs to be done?" autofocus>
-					<input id="new-new-todo" placeholder="Who needs to do it" autofocus>
+					<input id="new-new-todo" placeholder="Who needs to do it?" autofocus>
 				</div>
 			</header>
+
 			<section id="main">
 				<input id="toggle-all" type="checkbox">
 				<label for="toggle-all">Mark all as complete</label>
 				<ul id="todo-list"></ul>
+
 			</section>
 			<footer id="footer"></footer>
 		</section>
@@ -30,10 +32,14 @@
 		<script type="text/template" id="item-template">
 			<div class="view">
 				<input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
-				<label><%- title %></label>
+				<label class='title'><%- title %></label>
+				<label class="todoOwner"><%- owner %></label>
+				<button class="show"></button>
 				<button class="destroy"></button>
 			</div>
-			<input class="edit" value="<%- title %>">
+
+			<input class="edit title" value="<%- title %>">
+			<input class="edit owner" value="<%- owner %>">
 		</script>
 		<script type="text/template" id="stats-template">
 			<span id="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
@@ -52,6 +58,22 @@
 			<button id="clear-completed">Clear completed (<%= completed %>)</button>
 			<% } %>
 		</script>
+		<script type="text/template" id="extended-item-template">
+			<div id="extendedView">
+				<div>
+					<span>Title:</span>
+					<label class='title'><%- title %></label>
+				</div>
+				<div>
+					<span>Owner:</span>
+					<label class='todoOwner'><%- owner %></label>
+				</div>
+				<div>
+					<span>Time Added:</span>
+					<label class='time'><%- time %></label>
+				</div>
+			</div>
+		</script>
 		<script src="bower_components/todomvc-common/base.js"></script>
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/underscore/underscore.js"></script>
@@ -60,6 +82,7 @@
 		<script src="js/models/todo.js"></script>
 		<script src="js/collections/todos.js"></script>
 		<script src="js/views/todos.js"></script>
+		<script src="js/views/extendedTodo.js"></script>
 		<script src="js/views/app.js"></script>
 		<script src="js/routers/router.js"></script>
 		<script src="js/app.js"></script>

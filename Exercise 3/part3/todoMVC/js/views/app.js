@@ -20,6 +20,7 @@ var app = app || {};
 		// Delegated events for creating new items, and clearing completed ones.
 		events: {
 			'keypress #new-todo': 'createOnEnter',
+			'keypress #new-new-todo': 'createOnEnter',
 			'click #clear-completed': 'clearCompleted',
 			'click #toggle-all': 'toggleAllComplete'
 		},
@@ -30,15 +31,18 @@ var app = app || {};
 		initialize: function () {
 			this.allCheckbox = this.$('#toggle-all')[0];
 			this.$input = this.$('#new-todo');
+			this.$owner = this.$('#new-new-todo');
 			this.$footer = this.$('#footer');
 			this.$main = this.$('#main');
-
+			
 			this.listenTo(app.Todos, 'add', this.addOne);
 			this.listenTo(app.Todos, 'reset', this.addAll);
 			this.listenTo(app.Todos, 'change:completed', this.filterOne);
 			this.listenTo(app.Todos, 'filter', this.filterAll);
 			this.listenTo(app.Todos, 'all', this.render);
 
+			this.listenTo(app.Todos, 'change:selected', this.updateExtended);
+			
 			app.Todos.fetch();
 		},
 
@@ -90,27 +94,47 @@ var app = app || {};
 			app.Todos.each(this.filterOne, this);
 		},
 
+		/*
+		This method is for create and switch the extended view content with the relevant model.
+		*/
+		updateExtended: function (todo) {
+			if(todo.get('selected') === true) { /* For the first time */
+				if (this.extendedView === undefined) {
+					this.extendedView = new app.ExtendedTodo({model: todo});
+					$('#todoapp').before(this.extendedView.render().el);
+				} else {
+					this.extendedView.model = todo;
+					this.extendedView.trigger('updateListeners');
+				}
+			}
+		},
+		
 		// Generate the attributes for a new Todo item.
 		newAttributes: function () {
+			var date = new Date().toLocaleString();
 			return {
 				title: this.$input.val().trim(),
+				owner: this.$owner.val().trim(),
+				time: date,
 				order: app.Todos.nextOrder(),
 				completed: false
 			};
 		},
 
-		// If you hit return in the main input field, create new **Todo** model,
-		// persisting it to *localStorage*.
+		/* If you hit return in the main input field, create new **Todo** model,
+		   persisting it to *localStorage*.
+		*/		 
 		createOnEnter: function (e) {
-			if (e.which !== ENTER_KEY || !this.$input.val().trim()) {
+			if (e.which !== ENTER_KEY || !this.$input.val().trim() || !this.$owner.val().trim()) {
 				return;
 			}
 
 			app.Todos.create(this.newAttributes());
 			this.$input.val('');
+			this.$owner.val('');
 		},
 
-		// Clear all completed todo items, destroying their models.
+		/* Clear all completed todo items, destroying their models. */
 		clearCompleted: function () {
 			_.invoke(app.Todos.completed(), 'destroy');
 			return false;

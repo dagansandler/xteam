@@ -18,8 +18,10 @@ var app = app || {};
 		// The DOM events specific to an item.
 		events: {
 			'click .toggle': 'toggleCompleted',
-			'dblclick label': 'edit',
+			'dblclick label.title': 'edittitle',
+			'dblclick label.todoOwner': 'editowner',
 			'click .destroy': 'clear',
+			'click .show': 'showExtended',
 			'keypress .edit': 'updateOnEnter',
 			'blur .edit': 'close'
 		},
@@ -38,7 +40,8 @@ var app = app || {};
 			this.$el.html(this.template(this.model.toJSON()));
 			this.$el.toggleClass('completed', this.model.get('completed'));
 			this.toggleVisible();
-			this.$input = this.$('.edit');
+			this.$input = this.$('.edit.title');
+			this.$owner = this.$('.edit.owner');
 			return this;
 		},
 
@@ -60,22 +63,29 @@ var app = app || {};
 		},
 
 		// Switch this view into `"editing"` mode, displaying the input field.
-		edit: function () {
-			this.$el.addClass('editing');
+		edittitle: function () {
+			this.$el.addClass('editingTitle');
 			this.$input.focus();
+		},
+		
+		editowner: function () {
+			this.$el.addClass('editingOwner');
+			this.$owner.focus();
 		},
 
 		// Close the `"editing"` mode, saving changes to the todo.
 		close: function () {
 			var value = this.$input.val().trim();
+			var ownerValue = this.$owner.val().trim();
 
-			if (value) {
-				this.model.save({ title: value });
+			if (value && ownerValue) {
+				this.model.save({ title: value , owner: ownerValue });				
 			} else {
 				this.clear();
 			}
 
-			this.$el.removeClass('editing');
+			this.$el.removeClass('editingTitle');
+			this.$el.removeClass('editingOwner');
 		},
 
 		// If you hit `enter`, we're through editing the item.
@@ -87,7 +97,22 @@ var app = app || {};
 
 		// Remove the item, destroy the model from *localStorage* and delete its view.
 		clear: function () {
+			/*this.model.trigger('destroy');*/
 			this.model.destroy();
+		},
+		
+		/*
+		Handler when 's' is clicked.
+		*/
+		showExtended: function () {
+			var m = this.model;
+			app.Todos.models.forEach(function(e) {
+				if(e !== m && e.get('selected') === true) {
+					e.set('selected', false);
+				}
+			});
+			
+			this.model.toggleShow();
 		}
 	});
 })(jQuery);
