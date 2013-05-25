@@ -17,7 +17,7 @@ function parseRequest(requestString) {
 	var headers;
 	var body;
 
-	if (requestString === undefined) {
+	if (requestString === undefined || typeof requestString !== "string") {
 		return new Object();
 	}
 
@@ -63,8 +63,8 @@ function parseRequest(requestString) {
 	/*if we didn't return at some point the request was parsed*/
 	return new HttpRequest(method, uri, resource, resPath, headers, body);
 
-	}
 }
+
 
 
 
