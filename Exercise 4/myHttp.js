@@ -1,4 +1,5 @@
 var net = require('net');
+var fs = require('fs');
 var settings = require('./settings');
 
 function createStaticHTTPServer(rootFolder) {
@@ -20,8 +21,80 @@ function createStaticHTTPServer(rootFolder) {
         var activeRequests = 0;
         var acceptedRequests = 0;
         var totalRequests = 0;
+        
+        function status() {
+            var requestSuccessRate;
+            if (totalRequests === 0) {
+                requestSuccessRate = 100;
+            } else {
+                requestSuccessRate = (acceptedRequests * 100)/totalRequests;
+            }
+            return {
+                isStarted: isStarted,
+                startedDate: startedDate,
+                port: port,
+                numOfCurrentRequests: activeRequests,
+                precntageOfSuccesfulRequests: requestSuccessRate
+            };
+        };
+     
+        function routeRequest(socket, request) {
+            switch(request.method) {
+                case 'GET': {
+                    if(request.uri === '/status') {
+                        var stats = status();
+                        var statsPage = getStatusHtml(stats);
+                        socket.write("HTTP/1.1 200 OK\r\n");
+                        socket.write("Content-Type: text/html\r\nContent-Length: " + statsPage.length +"\r\n\r\n");
+                        socket.write(statsPage);
+                    } else {
+                        fs.exists(root + request.uri, function(exists) {
+                            if(exists) {
+                                /*file is there*/
+                                fs.lstat(root + request.uri, function(err, stats) {
+                                    if(err) {
+                                        console.log("found err");
+                                        throw err;
+                                    }
+                                    if(stats.isFile()) {
+                                        /*is file*/
+                                        fs.readFile(root + request.uri, function(err, data) {
+                                            if(err) {
+                                                console.log("error on file read: " + request.uri);
+                                                console.log(err);
+                                            }
+                                            console.log("Serving file " + request.uri + " to client");
+                                            socket.write("HTTP/1.1 200 OK\r\n");
+                                            socket.write("Content-Type: text/html\r\nContent-Length: " + data.toString().length +"\r\n\r\n");
+                                            socket.write(data.toString());
+                                        });
+                                    } else {
+                                        /*is directory*/
+                                        
+                                    }
+                                });
+                            } else {
+                                /*file not found*/
+                                socket.write("HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\nContent-Length: 26\r\n\r\n<b>404 File not found!</b>");
+                            }
+                        });
+                    }
+                    break;
+                }
+                case 'POST': {
+                
+                    break;
+                }
+                default: {
+                    /*the request type is not supported*/
+                    socket.write("HTTP/1.1 405 Method Not Allowed\r\nAllow: GET,POST\r\nContent-Type: text/html\r\nContent-Length: 0\r\n\r\n");
+                    break;
+                }
+            }
+        };
      
         function onTcpConnection(socket) {
+            console.log("new connection");
             var lastRequest = new Date();
             setTimeout(keepAlive(socket), settings.LAST_REQUEST_TIMEOUT_SEC*1000);
             socket.on('data', function(dat){
@@ -30,21 +103,7 @@ function createStaticHTTPServer(rootFolder) {
                 totalRequests++;
                 var request = parseRequest(dat.toString());
                 if(request !== {}) {
-                    switch(request.method) {
-                        case 'GET': {
-                            socket.write("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: 0\r\n\r\n");
-                            break;
-                        }
-                        case 'POST': {
-                        
-                            break;
-                        }
-                        default: {
-                            /*the request type is not supported*/
-                            socket.write("HTTP/1.1 405 Method Not Allowed\r\nAllow: GET,POST\r\nContent-Type: text/html\r\nContent-Length: 0\r\n\r\n");
-                            break;
-                        }
-                    }
+                    routeRequest(socket, request);
                     acceptedRequests++;
                     /*console.log(dat.toString());
                     console.log(request);*/
@@ -52,18 +111,18 @@ function createStaticHTTPServer(rootFolder) {
                 activeRequests--;
             });
             
-        function keepAlive(socket) {
-            var ka = function() {
-                if((new Date().getTime() - lastRequest.getTime()) > (settings.LAST_REQUEST_TIMEOUT_SEC*1000)) {
-                    console.log("a client connection timed out");
-                    socket.end();
-                } else {
-                    setTimeout(ka,settings.LAST_REQUEST_TIMEOUT_SEC*1000);
+            function keepAlive(socket) {
+                var ka = function() {
+                    if((new Date().getTime() - lastRequest.getTime()) > (settings.LAST_REQUEST_TIMEOUT_SEC*1000)) {
+                        console.log("a client connection timed out");
+                        socket.end();
+                    } else {
+                        setTimeout(ka,settings.LAST_REQUEST_TIMEOUT_SEC*1000);
+                    }
                 }
+                
+                return ka;
             }
-            
-            return ka;
-        }
         }   
         
         this.start = function(p) {        
@@ -86,21 +145,7 @@ function createStaticHTTPServer(rootFolder) {
             console.log("Server has stopped.");
         };
         
-        this.status = function() {
-            var requestSuccessRate;
-            if (totalRequests === 0) {
-                requestSuccessRate = 100;
-            } else {
-                requestSuccessRate = (acceptedRequests * 100)/totalRequests;
-            }
-            return {
-                isStarted: isStarted,
-                startedDate: startedDate,
-                port: port,
-                numOfCurrentRequests: activeRequests,
-                precntageOfSuccesfulRequests: requestSuccessRate
-            };
-        };
+        this.status = status;
     };
     
     return new ServerInstance();
@@ -176,4 +221,13 @@ function parseRequest(requestString) {
 	/*if we didn't return at some point the request was parsed,
         and we can safely construct the object and return it*/
 	return new HttpRequest(method, uri, resource, resPath, headers, body);
+}
+
+function getStatusHtml(stats) {
+    var ret = '<html><link rel="stylesheet" type="text/css" href="status.css" /><table><tr><th>Property</th><th>Value</th></tr>';
+    for(var prop in stats) {
+        ret += "<tr><td>" + prop + "</td><td>" + stats[prop] + "</td></tr>";
+    }
+    ret += "</table><html>";
+    return ret;
 }
