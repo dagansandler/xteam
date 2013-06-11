@@ -1,6 +1,13 @@
-var http= require("./myHttp");
-var server = http.createStaticHTTPServer("./public");
+var http = require('http');
+var myHttp= require("./myHttp");
+var server = myHttp.createStaticHTTPServer("./public");
 server.start(8888);
+
+/*test test test*/
+
+
+
+
 //setTimeout(requestStatus, 5000);
 setTimeout(function(){
     server.stop();
@@ -10,3 +17,4 @@ function requestStatus() {
     console.log(server.status());
     setTimeout(requestStatus, 5000);
 }
+

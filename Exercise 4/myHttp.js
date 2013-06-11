@@ -1,3 +1,8 @@
+/*
+- content type like .css to respond
+- POST
+*/
+
 var net = require('net');
 var fs = require('fs');
 var settings = require('./settings');
@@ -39,6 +44,15 @@ function createStaticHTTPServer(rootFolder) {
         };
      
         function routeRequest(socket, request) {
+		   
+		   if(request.uri.indexOf("..") !== -1){
+			   console.log('Request include ".."');
+			   return;
+			   //return error message
+		   }
+		  var content_type = contentHelper(request); 
+		  console.log(content_type);	
+//		  console.log(request);
             switch(request.method) {
                 case 'GET': {
                     if(request.uri === '/status') {
@@ -65,7 +79,7 @@ function createStaticHTTPServer(rootFolder) {
                                             }
                                             console.log("Serving file " + request.uri + " to client");
                                             socket.write("HTTP/1.1 200 OK\r\n");
-                                            socket.write("Content-Type: text/html\r\nContent-Length: " + data.toString().length +"\r\n\r\n");
+                                            socket.write("Connection: Keep-Alive\r\nContent-Type: text/html\r\nContent-Length: " + data.toString().length +"\r\n\r\n");
                                             socket.write(data.toString());
                                         });
                                     } else {
@@ -92,6 +106,66 @@ function createStaticHTTPServer(rootFolder) {
                 }
             }
         };
+	   
+	   function contentHelper(request) {
+		  // console.log("rrr:"+request.headers['Accept'])
+		   var accArr = (request.headers['Accept']).split(/[,;]/);
+		   for (var index in accArr){
+			//   console.log(accArr[index]);
+			   switch(accArr[index]){
+			   
+				   case 'application/javascript': {
+					   console.log('application/javascript');
+				   	 break;
+				   }
+		   
+				   case 'text/html': {
+	   				 console.log('text/html');
+					 return 'Content-Type: text/html';
+				   	 break;
+				   }
+		   
+				   case 'text/css': {
+					   console.log('text/css');
+					   return 'Content-Type: text/css';
+				   	 break;
+				   }
+		   
+				   case 'image/jpeg': {
+				   	console.log('image/jpeg');
+				   	return 'Content-Type: image/jpeg'
+				   	break;
+				   }
+		   
+				   case 'image/gif': {
+					   console.log('image/gif');
+					   return 'Content-Type: image/gif'
+				   	 break;
+				   }
+			   
+				   case 'application/json': {
+					   console.log('application/json');
+					   return 'Content-Type: application/json'
+				   	 break;
+				   }
+			   
+				   case 'text/plain': {
+					   console.log('text/palin');
+					   return 'Content-Type: text/plain'
+				   	 break;
+				   }
+			   
+			   	   default: {
+					   console.log('default');
+					   return;
+					   break;
+			   	   }
+			  
+			   
+			   }
+		   }
+		   
+	   }
      
         function onTcpConnection(socket) {
             console.log("new connection");
