@@ -1,4 +1,13 @@
-//hello world
+/* 
+This is the load tester (bonus part):
+This file contains a load test. 
+First, the we user (the one who uses our extention module) assign to '/loadTest' with call back (see line 18).
+After that a server been created for 10 seconds.
+Start this point, each 10ms the same request sends to server.
+After 10 seconds, the server get a close invokation (server.stop() at line 24),
+but activeRequests is still > 0, so the server stop getting new request, finishe his requests left,
+and after the active request will be = 0 the server will really stop.
+*/
 var http = require('http');
 var myHttp = require("./myHttp");
 var server = myHttp.createHTTPServer("./public");

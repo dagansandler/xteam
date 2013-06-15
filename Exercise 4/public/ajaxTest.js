@@ -1,3 +1,7 @@
+/*
+A very simple JavaScript file to show our proof of concept :)
+*/
+
 $(document).ready(function() {
 	$('#one').click(function() {
 		console.log("click button one");

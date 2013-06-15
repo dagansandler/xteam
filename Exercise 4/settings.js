@@ -1,3 +1,6 @@
+/*
+This file include some settings for the server.
+*/
 exports.LAST_REQUEST_TIMEOUT_SEC = 2;
 exports.CRLF = "\r\n";
 exports.STATUSCODES = {
