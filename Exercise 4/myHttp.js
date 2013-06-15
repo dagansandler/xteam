@@ -12,7 +12,7 @@ var events = require('events');
 function createHTTPServer(rootFolder) {
 	var eventEmitter = new events.EventEmitter();
 
-	
+
 
 	var ServerInstance = function() {
 
@@ -31,6 +31,16 @@ function createHTTPServer(rootFolder) {
 		};
 		eventEmitter.on('onResponse', sendResponse);
 		eventEmitter.on('onRequest', routeRequest);
+
+		assignGetHandler('/status', onStatusRequest);
+
+		function onStatusRequest(req, res) {
+			var stats = status();
+			var statsPage = getStatusHtml(stats);
+			res.headers["Content-Type"] = "text/html";
+			res.write(statsPage);
+			res.end();
+		}
 
 		function status() {
 			var requestSuccessRate;
@@ -89,44 +99,38 @@ function createHTTPServer(rootFolder) {
 			switch (request.method) {
 			case 'GET':
 				{
-					if (request.uri === '/status') {
-						var stats = status();
-						var statsPage = getStatusHtml(stats);
-						response.headers["Content-Type"] = content_type;
-						response.write(statsPage);
-						response.end();
-					} else {
-						fs.exists(root + request.uri, function(exists) {
-							if (exists) { /*file is there*/
-								fs.lstat(root + request.uri, function(err, stats) {
-									if (err) {
-										console.log("found err");
-										throw err;
-									}
-									if (stats.isFile()) { /*is file*/
-										fs.readFile(root + request.uri, function(err, data) {
-											if (err) {
-												console.log("error on file read: " + request.uri);
-												console.log(err);
-											}
-											response.headers["Connection"] = "Keep-Alive";
-											response.headers["Content-Type"] = content_type;
-											response.write(data.toString());
-											response.end();
-											console.log("Serving file " + request.uri + " to client");
-										});
-									} else { /*is directory*/
-
-									}
-								});
-							} else { /*file not found*/
-								response.status = 404;
-								response.headers["Content-Type"] = "text/html";
-								response.write("<b>404 Not Found</b>");
-								response.end();
-							}
-						});
-					}
+					fs.exists(root + request.uri, function(exists) {
+						if (exists) { /*file is there*/
+							fs.lstat(root + request.uri, function(err, stats) {
+								if (err) {
+									console.log("found err");
+									throw err;
+								}
+								if (stats.isFile()) { /*is file*/
+									fs.readFile(root + request.uri, function(err, data) {
+										if (err) {
+											console.log("error on file read: " + request.uri);
+											console.log(err);
+										}
+										response.headers["Connection"] = "Keep-Alive";
+										response.headers["Content-Type"] = content_type;
+										response.write(data.toString());
+										response.end();
+										console.log("Serving file " + request.uri + " to client");
+									});
+								} else { /*is directory*/
+									response.headers["Content-Type"] = "text/html";
+									response.write("Can not access directories");
+									response.end();
+								}
+							});
+						} else { /*file not found*/
+							response.status = 404;
+							response.headers["Content-Type"] = "text/html";
+							response.write("<b>404 Not Found</b>");
+							response.end();
+						}
+					});
 					break;
 				}
 			case 'POST':
@@ -151,14 +155,13 @@ function createHTTPServer(rootFolder) {
 
 			var ansParams = {};
 			var uriData = reqURI.split('/');
-
 			for (var mapKey in listenerMap[method]) {
 				var flag = false;
 				var tmpResource = mapKey.split('/');
 
 				if (tmpResource.length !== uriData.length) {
 					ansParams = {};
-					console.log("length -NOT EQUALS!");
+					/*console.log("length -NOT EQUALS!");*/
 					continue;
 				} else {
 					for (var resourceIndex in tmpResource) {
@@ -167,19 +170,22 @@ function createHTTPServer(rootFolder) {
 
 						if (uriCurrentElm.length !== 0 && resourceCurrentElm.charAt(0) !== ':') {
 							if (resourceCurrentElm === uriCurrentElm) {
-								console.log(uriCurrentElm + " -EQUALS!");
+								/*console.log(uriCurrentElm + " -EQUALS!");*/
 								continue;
 							} else {
-								console.log(uriCurrentElm + " and " + resourceCurrentElm + "-NOT EQUALS");
+								/*console.log(uriCurrentElm + " and " + resourceCurrentElm + "-NOT EQUALS");*/
 								ansParams = {};
 								flag = true;
 								break;
 							}
-						} else if (uriCurrentElm.length !== 0 && resourceCurrentElm.charAt(0) === ':') {
+						} else if (uriCurrentElm.length === 0) {
+							continue;
+						} else if (resourceCurrentElm.charAt(0) === ':') {
 							ansParams[resourceCurrentElm.substring(1, resourceCurrentElm.length)] = uriCurrentElm;
-							console.log("OK -EQUALS!");
+							/*console.log("OK -EQUALS!");*/
 							continue;
 						}
+						flag = true;
 					}
 					if (flag) {
 						continue;
@@ -205,9 +211,9 @@ function createHTTPServer(rootFolder) {
 			}
 
 			accArr = accArr.split(/[,;]/);
-			
-			for(var index in accArr) {
-				if(settings.CONTENT_TYPES[accArr[index]] !== undefined) {
+
+			for (var index in accArr) {
+				if (settings.CONTENT_TYPES[accArr[index]] !== undefined) {
 					return accArr[index];
 				}
 			}
@@ -217,6 +223,8 @@ function createHTTPServer(rootFolder) {
 
 			console.log("new connection");
 			var lastRequest = new Date();
+			var buf = "";
+
 			setTimeout(keepAlive(socket), settings.LAST_REQUEST_TIMEOUT_SEC * 1000);
 			socket.on('data', function(dat) {
 				if (!shuttingDown) {
@@ -225,22 +233,15 @@ function createHTTPServer(rootFolder) {
 					if (request !== {}) {
 						activeRequests++;
 						totalRequests++;
-						
+
 						eventEmitter.emit('onRequest', socket, request);
-				
+
 						//routeRequest(socket, request);
 						acceptedRequests++;
 						/*console.log(dat.toString());
                     console.log(request);*/
 					}
 					//activeRequests--;
-
-					if (shuttingDown && activeRequests === 0) {
-						console.log('shuttingDown from onTcpConnection');
-						eventEmitter.emit('shutDown');
-
-
-					}
 				}
 			});
 
@@ -260,35 +261,59 @@ function createHTTPServer(rootFolder) {
 			}
 
 		}
-		
+
 		function Response(socket) {
-			this.headers = {};
+			this.headers = { "Content-Type" : "text/html" };
 			var body = "";
 			this.status = 200;
+			var responseSent = false;
 
 			this.write = function(addToBody) {
 				body += addToBody;
 			}
 
 			this.end = function(addToBody) {
-				//set content length and send response
-				if (addToBody !== undefined) {
-					body += addToBody;
+				if (!responseSent) {
+					responseSent = true;
+					//set content length and send response
+					if (addToBody !== undefined) {
+						body += addToBody;
+					}
+					this.body = body;
+					this.headers["Content-Length"] = this.body.length;
+					eventEmitter.emit('onResponse', this, socket);
 				}
-				this.body = body;
-				this.headers["Content-Length"] = this.body.length;
-				eventEmitter.emit('onResponse', this, socket);
 			}
+
+			function reqTimeOut() {
+				if (!responseSent) {
+					var r = new Response(socket);
+					responseSent = true;
+					r.status = 408;
+					r.headers["Content-Type"] = "text/html";
+					r.write("Request Timed Out");
+					r.end();
+				}
+			}
+			setTimeout(reqTimeOut, 1000);
 		}
 
 		function sendResponse(res, socket) {
-			socket.write(settings.HTTPVERSION + " " + settings.STATUSCODES[res.status] + settings.CRLF);
-			for(var header in res.headers) {
-				socket.write(header + ":" + res.headers[header] + settings.CRLF);
+			try {
+				socket.write(settings.HTTPVERSION + " " + settings.STATUSCODES[res.status] + settings.CRLF);
+				for (var header in res.headers) {
+					socket.write(header + ":" + res.headers[header] + settings.CRLF);
+				}
+				socket.write(settings.CRLF);
+				socket.write(res.body);
+			} catch (err) {
+				console.log("sendResponse error: " + err);
 			}
-			socket.write(settings.CRLF);
-			socket.write(res.body);
 			activeRequests--;
+			if (shuttingDown && activeRequests === 0) {
+				console.log('shuttingDown from onTcpConnection');
+				eventEmitter.emit('shutDown');
+			}
 		}
 
 		this.onStart = function(callback) {
@@ -318,7 +343,6 @@ function createHTTPServer(rootFolder) {
 
 		function closeServer() {
 			server.close();
-			console.log(activeRequests);
 			isStarted = false;
 			port = undefined;
 			startedDate = undefined;

@@ -5,40 +5,56 @@ server.start(8888);
 
 /*test test test*/
 
-server.get('/status/ds', function(req, res) {
-	res.headers["Content-Type"] = "text/html";
-	res.headers["fake"] = "fakeheader";
-	res.status = 404;
-	res.write("custom status message");
+
+/* --- Interesting function-1 --- */
+server.get("/test1/:first/:last", function(req, res) {
+	for (var key in req.params) {
+		console.log(key + ":" + req.params[key]);
+	}
+
+	res.write("Hello Dear Grader " + req.params.first + " " + req.params.last);
 	res.end();
+});
+
+/* --- Interesting function-2 --- */
+server.get("/test1", function(req, res) {
+	res.write("Hello Grader, This is the most intresting function ever! Have a nice day");
+	res.end();
+});
+
+/* --- Interesting function-3 - AJAX --- */
+server.get("/test/:num", function(req, res) {
+	switch (req.params.num) {
+	case 'one':
+		{
+			res.write("This is ajax one");
+			res.end();
+			break;
+		}
+	case 'two':
+		{
+			res.write("This is ajax two");
+			res.end();
+			break;
+		}
+	case 'three':
+		{
+			res.write("This is ajax three");
+			res.end();
+			break;
+		}
+	default:
+		{
+			res.status=404;
+			res.end("Sorry, no such test: " + req.params.num);
+			break;
+		}
+	}
 });
 
 
 //setTimeout(requestStatus, 5000);
 setTimeout(function() {
 	server.stop();
-}, 10000);
+}, 10000000);
 
-var isErr = false;
-setTimeout(requestStatus, 10);
-
-
-function requestStatus() {
-	var options = {
-		hostname: 'localhost',
-		port: 8888,
-		path: '/status',
-		method: 'GET'
-	};
-
-	var req = http.request(options, function(res) {console.log("all good!");});
-	req.on('error', function(err) {
-		isErr = true;
-		console.log('error occure!!!');
-	});
-	req.end();
-
-	if (!isErr) {
-		setTimeout(requestStatus, 10);
-	}
-}
