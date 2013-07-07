@@ -1,0 +1,11 @@
+{
+    "name": "packagename",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+	    "backbone" : "*",
+	    "redis" : "*",
+	    "underscore" : "*",
+	    "socket.io": "*"
+    }
+}
