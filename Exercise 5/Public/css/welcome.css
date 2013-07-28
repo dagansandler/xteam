@@ -1,0 +1,127 @@
+#container {
+	margin:auto;
+	width:350px;
+}
+#logo {
+	margin: auto;
+	width: 200px;
+	height: auto;
+}
+#tabbox {
+	height:40px
+}
+#panel {
+border: solid 1px #f2f2f2;
+height: 350px;
+padding: 20px;
+background-color: #e5e5e5;
+color:#333;
+}
+.signup {
+margin-left: 6px;
+margin-right: 1px;
+}
+
+.tab {
+background: #999;
+display: block;
+height: 40px;
+line-height: 40px;
+text-align: center;
+width: 80px;
+float: right;
+font-weight: bold;
+-webkit-border-top-left-radius: 4px;
+-webkit-border-top-right-radius: 4px;
+-moz-border-radius: 4px 4px 0px 0px;
+border-top-left-radius: 4px 4px;
+border-top-right-radius: 4px 4px;
+}
+.select {
+background-color: #e5e5e5;
+}
+#label {
+font-size: 11px;
+}
+.input {
+font-size: 13px;
+color: #333;
+height: 28px;
+line-height: 22px;
+margin: 4px 0px 10px;
+padding: 5px 0px 0px 5px;
+position: relative;
+width: 260px;
+border: solid 1px #666;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius:3px;
+}
+.submit {
+font-size: 12px;
+clear: both;
+background-color: #005481;
+border: none;
+color: #EEE;
+cursor: pointer;
+font-weight: normal;
+text-transform: uppercase;
+overflow: visible;
+padding: 9px 30px;
+text-align: center;
+border-top-right-radius: 4px 4px;
+border-top-left-radius: 4px 4px;
+border-bottom-right-radius: 4px 4px;
+border-bottom-left-radius: 4px 4px;
+}
+body {
+font-family: Arial, Helvetica, sans-serif;
+font: normal 12px helvetica,arial,sans-seri;
+background-color: #CFDBDB;
+font-weight:500;
+}
+#forgot {
+font-size: 11px;
+text-align: right;
+}
+
+#button {
+margin-top: 10px;
+text-align: center;
+}
+.reg {
+font-size: 12px;
+clear: both;
+background-color: #060;
+border: none;
+color: white;
+cursor: pointer;
+font-weight: normal;
+text-transform: uppercase;
+overflow: visible;
+padding: 9px 30px;
+text-align: center;
+border-top-right-radius: 4px 4px;
+border-top-left-radius: 4px 4px;
+border-bottom-right-radius: 4px 4px;
+border-bottom-left-radius: 4px 4px;
+}
+a {
+color: #005481;
+margin: 0;
+padding: 0;
+text-decoration: none;
+}
+a:hover { text-decoration:none}
+
+.tab a { color:#FFF !important}
+.tab a:hover { color:#FFF}
+#loginbox {
+	min-height:200px;
+	padding:10px;
+}
+#signupbox {
+	min-height:200px;
+	padding:10px;
+	display:none;
+}

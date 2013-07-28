@@ -2,45 +2,55 @@
 <html>
 
 	<head>
-		<script type="text/javascript" src="/scripts/jquery-1.9.1.min.js"></script>
-		<link type="text/css" rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./scripts/jquery-1.9.1.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/welcome.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="scripts/ketchup/jquery.ketchup.css" />
 		<script type="application/javascript" src="scripts/ketchup/jquery.ketchup.all.min.js"></script>
 		<script type="application/javascript" src="scripts/welcome.js"></script>
-		
-		
 		<title>Welcome!</title>
 	</head>
 
 	<body>
-		<div id="login_div">
-			<form id="login_form" method='POST' class="MyForm">
-				<span>Username:</span>
-				<input id="login_username" name='username' type='text' placeholder="enter username" data-validate="validate(required, minlength(3), username)">
-				<span>Password:</span>
-				<input id="login_password" name='pass'type='password' placeholder="enter password" data-validate="validate(required, minlength(6))">
-				<input id="login_btn" type="submit" value='Send'>
-				
-			</form>
+		<div id="logo">
+			<img src="xteamailogo.png" width='200px'>
 		</div>
-		<div id="register_div">
-			<form id="register_form" method='POST' class="MyForm">
-				<span>Username:</span>
-				<input id="reg_username" name='username' type='text' placeholder="choose a username" data-validate="validate(required, username, minlength(3))">
-				<span>Password:</span>
-				<input id="reg_password" name='pass' type='password' placeholder="choose a password" data-validate="validate(required, minlength(6))">
-				<span>First Name</span>
-				<input id="firstname" name='firstname' type='text' placeholder="your first name" data-validate="validate(required, username)">
-				<span>Last Name</span>
-				<input id="lastname" name='lastname' type='text' placeholder="your last name" data-validate="validate(required, username)">
-				<span>Age</span>
-				<input id="age" name='age' type='number' placeholder="your age" data-validate="validate(required, digit)">
-				<input id="register_btn" type="submit" value='Send'>
-			</form>
+		<div id="container">
+			<div id="tabbox">
+				<a href="#" id="signup" class="tab signup">Register</a>
+				<a href="#" id="login" class="tab select">Login</a>
+			</div>
+			<div id="panel">
+				<div id="loginbox">
+					<form id="login_form" method='POST' class="MyForm">
+						<div id="label">User Name:</div>
+						<input id="login_username" name='username' class="input" type='text' placeholder="enter username" data-validate="validate(required, minlength(3), username)">
+						<div id="label">Password:</div>
+						<input id="login_password" name='pass' class="input" type='password' placeholder="enter password" data-validate="validate(required, minlength(6))">
+						<div id="forgot"><a href='#' style="color:#006699">forgot password?</a></div>
+						<div id="button">
+							<input id="login_btn" class="submit" type="submit" value='LOG IN'>
+						</div>
+					</form>
+				</div>
+				<div id="signupbox">
+					<form id="register_form" method='POST' class="MyForm">
+						<div id="label">Username:</div>
+						<input id="reg_username" name='username' class="input" type='text' placeholder="choose a username" data-validate="validate(required, username, minlength(3))">
+						<div id="label">Password:</div>
+						<input id="reg_password" name='pass' class="input" type='password' placeholder="choose a password" data-validate="validate(required, minlength(6))">
+						<div id="label">First Name</div>
+						<input id="firstname" name='firstname' class="input" type='text' placeholder="your first name" data-validate="validate(required, username)">
+						<div id="label">Last Name</div>
+						<input id="lastname" name='lastname' class="input" type='text' placeholder="your last name" data-validate="validate(required, username)">
+						<div id="label">Age</div>
+						<input id="age" name='age' class="input" type='number' placeholder="your age" data-validate="validate(required, digit)">
+						<div id="button">
+							<input id="register_btn" class="reg" type="submit" value='Send'>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
-
-    <div id="server_answer">tmp</div>
+		<div id="server_answer"></div>
 	</body>
-
 </html>

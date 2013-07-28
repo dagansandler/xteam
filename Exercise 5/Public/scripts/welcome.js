@@ -1,7 +1,26 @@
 $(document).ready(function() {
     $("#register_form").ketchup();
     $("#login_form").ketchup();
-
+	
+	$('#forgot').click(function() {
+		$(this).html("too bad, mate!");
+	});
+	
+	$(".tab").click(function() {
+		var X=$(this).attr('id');
+		if(X=='signup') {
+			$("#login").removeClass('select');
+			$("#signup").addClass('select');
+			$("#loginbox").hide();
+			$("#signupbox").fadeIn('fast');
+		} else {
+			$("#signup").removeClass('select');
+			$("#login").addClass('select');
+			$("#signupbox").hide();
+			$("#loginbox").fadeIn('fast');
+		}
+	});
+	
     var regRequest;
     var loginRequest;
     $("#register_btn")
