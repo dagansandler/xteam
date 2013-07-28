@@ -1,7 +1,8 @@
 var emailApp = emailApp || {};
 
 var EmailCollection = Backbone.Collection.extend({
-    model: emailApp.emailModel
+    model: EmailModel,
+    url: '/emails'
 });
 
 emailApp.emailCollection = new EmailCollection();

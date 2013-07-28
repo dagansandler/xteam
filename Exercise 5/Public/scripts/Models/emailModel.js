@@ -1,6 +1,7 @@
 var emailApp = emailApp || {};
 
 var EmailModel = Backbone.Model.extend({
+
     defaults: {
         from: '',
         to: '',
@@ -11,4 +12,4 @@ var EmailModel = Backbone.Model.extend({
 
 });
 
-emailApp.emailModel = new EmailModel();
+//emailApp.emailModel = new EmailModel();

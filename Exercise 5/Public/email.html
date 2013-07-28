@@ -1,22 +1,49 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<script type="text/javascript" src="/scripts/jquery-1.9.1.min.js"></script>
-		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-		<script src="bootstrap/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" type="text/css" media="screen" href="scripts/ketchup/jquery.ketchup.css" />
-		<script type="application/javascript" src="scripts/ketchup/jquery.ketchup.all.min.js"></script>
-		<script type="application/javascript" src="scripts/email.js"></script>
-		
-		
-		<title>Email!</title>
-	</head>
+    <head>
+        <title>Xteam-Emails</title>
+    </head>
 
-	<body>
-		
-			<button>hit me!</button>
-			
-	</body>
+    <body>
+
+        <form id='new_email'>
+            <label>From:</label><input id='from' name='from' type='text'/>
+            <label>To:</label><input id='to' name='to' type='text'/>
+            <label>Subject:</label><input id='subject' name='subject' type='text'/>
+            <label>Body:</label><input id='body' name='body' type='text'/>
+            <input id="add_email" type="submit" value='Send'>
+        </form>
+
+        <script type="text/template" id="email_template">
+            <div class="view">
+                <span class="from">  <%= from %></span>
+                <span class="to">  <%= to %></span>
+                <span class="subject"> <%= subject %></span>
+                <span class="body">  <%= body %></span>
+                <span class="date">  <%= sentDate %></span>
+            </div>
+
+
+        </script>
+
+
+
+        <ul id='emails_container'></ul>
+
+
+
+        <script src="bower_components/todomvc-common/base.js"></script>
+        <script src="bower_components/jquery/jquery.js"></script>
+        <script src="bower_components/underscore/underscore.js"></script>
+        <script src="bower_components/backbone/backbone.js"></script>
+        <script src="bower_components/backbone.localStorage/backbone.localStorage.js"></script>
+        <script src="scripts/Models/emailModel.js"></script>
+        <script src="scripts/Collections/emailsCollection.js"></script>
+        <script src="scripts/Views/emailView.js"></script>
+        <script src="scripts/Views/emailsContainerView.js"></script>
+        <script src="scripts/emailApp.js"></script>
+
+    </body>
 
 </html>
