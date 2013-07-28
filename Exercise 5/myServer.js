@@ -35,7 +35,7 @@ var server = http.createServer(requestHandler);
 var socket = require('socket.io').listen(server),
     _ = require('underscore')._,
     Backbone = require('backbone'),
-    models = require('./Models/models'),
+  //  models = require('./Public/Models/models'),
     uuid = require('node-uuid');
 
 //redis
@@ -47,8 +47,8 @@ rc.on("error", function (err) {
 });
 //
 var root = 'Public';
-var TTL = 60;
-
+var TTL = 6000;
+var incomeUUID;
 function requestHandler(request, response) {
 
     //route get/post requests
@@ -72,9 +72,20 @@ function requestHandler(request, response) {
 server.listen(8080);
 
 function getHandler(request, response) {
-    console.log('GET');
+//    console.log('GET');
     console.log(request.url);
-    console.log('ZIVVV:' + request.body);
+//    console.log('ZIVVV:' + request.body);
+
+    if(request.url === '/emails'){
+        try{
+            incomeUUID = queryString.parse(request.headers['cookie']).uuid;
+            console.log(incomeUUID);
+        }catch(err){
+            console.log(err);
+        }
+        console.log('Client request for EMAILS');
+        getEmailsHelper(request, response);
+    }
 
     fs.exists(root + request.url, function(exists) {
         if (exists) { /*file is there*/
@@ -111,8 +122,8 @@ function getHandler(request, response) {
 }
 
 function postHandler(request, response) {
-    console.log("POST");
-    console.log(request.url);
+//    console.log("POST");
+//    console.log(request.url);
 
     var tmp = {ran: "greenberg"};
     console.log(tmp);
@@ -152,7 +163,7 @@ function postHandler(request, response) {
 
             case 'login':
                 console.log('LOGIN!!!');
-                var incomeUUID = queryString.parse(request.headers['cookie']).uuid;
+
                 console.log(incomeUUID);
 
                 var currentUser = new User({
@@ -163,6 +174,13 @@ function postHandler(request, response) {
                 User.findOne({username: currentUser.username, password: currentUser.password}, function(err,obj) {
                     console.log(obj);
                     if (obj) {
+                        var currentUsername = rc.get(incomeUUID);
+                        if(currentUsername.length<16){
+                            incomeUUID = startSession(parseBody.username);
+                        }
+                        else{
+                            extendExpiration(incomeUUID);
+                        }
                         console.log('good :)');
                         rc.expire(incomeUUID, TTL);
                         response.writeHead(200, {"Content-Type": "text/plain"});
@@ -215,8 +233,31 @@ function existsUser(user, response) {
 function startSession(username) {
     var currentUUID = uuid.v1();
     console.log("start session for:" + username + " with UUID:" + currentUUID);
+    rc.get(currentUUID, redis.print);
     rc.set(currentUUID, username, redis.print);
-    rc.expire(currentUUID, TTL);
+    extendExpiration(currentUUID);
     return currentUUID;
 
+}
+
+function extendExpiration(curUUID){
+    rc.expire(curUUID, TTL);
+}
+
+function getEmailsHelper(request, respond){
+    if(incomeUUID.length === 16){
+       // console.log(rc.get(currentUUID));
+        extendExpiration(incomeUUID);
+        var currentUsername = rc.get(incomeUUID);
+
+        console.log(currentUsername);
+        User.findOne({username: currentUsername}, function(err,obj){
+
+            if(obj){
+
+                console.log(obj);
+            }
+
+        });
+    }
 }
