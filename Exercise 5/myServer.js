@@ -102,7 +102,7 @@ function getHandler(request, response) {
                         }
                         //response.headers["Connection"] = "Keep-Alive";
                         //response.headers["Content-Type"] = content_type;
-                        response.write(data.toString());
+                        response.write(data);
                         response.end();
                         console.log("Serving file " + request.url + " to client");
                     });
