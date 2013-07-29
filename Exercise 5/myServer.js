@@ -8,23 +8,49 @@ db.once('open', function callback() {
     console.log('open db');
 });
 
+
+
+var EmailsSchema = mongoose.Schema({
+    from: String,
+    to: String,
+    date: { type: Date, default: Date.now },
+    subject: String,
+    body: String
+});
+
 //Users Schema
 var UsersSchema = mongoose.Schema({
     username: String,
     password: String,
     firstname: String,
     lastname: String,
-    age: Number
+    age: Number,
+    received_emails: [mongoose.Schema.Types.ObjectId],
+    sent_emails:[mongoose.Schema.Types.ObjectId]
+
 });
 
-var EmailsSchema = mongoose.Schema({
-    from: String,
-    to: String,
-    date: Date,
-    text: String
-});
 var User = mongoose.model('User', UsersSchema);
 var Email = mongoose.model('Email', EmailsSchema);
+
+var tmpEmail = new Email({
+    from: 'ran',
+    to: 'ranran',
+    subject: 'subsubsub',
+    body: 'body body body body body body body body '
+
+});
+
+tmpEmail.save(function(err, email) {
+    if (err) {
+        console.log(err);
+    }
+    else {
+        console.log(email);
+
+    }
+});
+
 
 
 var http = require('http');
@@ -35,7 +61,7 @@ var server = http.createServer(requestHandler);
 var socket = require('socket.io').listen(server),
     _ = require('underscore')._,
     Backbone = require('backbone'),
-  //  models = require('./Public/Models/models'),
+//  models = require('./Public/Models/models'),
     uuid = require('node-uuid');
 
 //redis
@@ -72,17 +98,12 @@ function requestHandler(request, response) {
 server.listen(8080);
 
 function getHandler(request, response) {
-//    console.log('GET');
     console.log(request.url);
-//    console.log('ZIVVV:' + request.body);
 
-    if(request.url === '/emails'){
-        try{
-            incomeUUID = queryString.parse(request.headers['cookie']).uuid;
-            console.log(incomeUUID);
-        }catch(err){
-            console.log(err);
-        }
+    if(request.url === '/emails'){//If the user asked form his emails
+
+        incomeUUID = getUUIDFromGetRequest(request);
+        console.log(incomeUUID);
         console.log('Client request for EMAILS');
         getEmailsHelper(request, response);
     }
@@ -122,14 +143,7 @@ function getHandler(request, response) {
 }
 
 function postHandler(request, response) {
-//    console.log("POST");
-//    console.log(request.url);
 
-    var tmp = {ran: "greenberg"};
-    console.log(tmp);
-    console.log(tmp.ran);
-
-    //console.log('ZIVVV:'+request.body)
     var body = '';
     request.on('data', function(data) {
         body += data;
@@ -145,54 +159,58 @@ function postHandler(request, response) {
                     password: parseBody.password,
                     firstname: parseBody.firstname,
                     lastname: parseBody.lastname,
-                    age: parseBody.age
+                    age: parseBody.age,
+                    received_emails: {},
+                    sent_emails: {}
+
                 });
-                //var myDocument = myCollection.findOne( { username: parseBody.username } );
+
                 User.findOne({username: parseBody.username}, function(err,obj) {
                     console.log(obj);
                     if (!obj) {
                         var uuidTMP = startSession(parseBody.username);
                         insertUser(currentUser, response, uuidTMP);
                     }
-
                     else {
-                        existsUser(parseBody, response);
+                        console.log('The username:' + parseBody.username + ' is aready in the DB');
+                        existsUser(parseBody.username, response);
                     }
                 });
                 break;
 
             case 'login':
                 console.log('LOGIN!!!');
-
                 console.log(incomeUUID);
-
                 var currentUser = new User({
                     username: parseBody.username,
                     password: parseBody.password
                 });
+                var tmpUUID = getUUIDFromGetRequest(request);
 
+                //get the username from the DB
                 User.findOne({username: currentUser.username, password: currentUser.password}, function(err,obj) {
                     console.log(obj);
                     if (obj) {
-                        var currentUsername = rc.get(incomeUUID);
-                        if(currentUsername.length<16){
-                            incomeUUID = startSession(parseBody.username);
-                        }
-                        else{
-                            extendExpiration(incomeUUID);
-                        }
-                        console.log('good :)');
-                        rc.expire(incomeUUID, TTL);
-                        response.writeHead(200, {"Content-Type": "text/plain"});
-                        response.write("OK registered");
-                        response.end();
-                    }
-                    else {
-                        console.log('bad :(');
-                        response.writeHead(403, {"Content-Type": "text/plain"});
-                        response.write("incorrect password");
-                        response.end();
+                        //is the session from the redis server available?
+                        rc.get(tmpUUID, function(err, value){
+                            if(err){
+                                console.log('ERROR:'+err);
+                            }
+                            else if(value){//
+                                extendExpiration(tmpUUID)
+                                loginUserRespond(currentUser, response, tmpUUID);
+                            }
+                            else if(!value){
+                                var uuidTMP = startSession(parseBody.username);
+                                loginUserRespond(currentUser, response, uuidTMP);
+                            }
 
+                        });
+                    }
+                    //The username isn't at tne DB
+                    //Return 403 response to the user
+                    else {
+                        badUsernameLogin(response);
                     }
                 });
 
@@ -204,26 +222,59 @@ function postHandler(request, response) {
     });
 }
 
+function badUsernameLogin(response){
+    console.log('bad :(');
+    response.writeHead(403, {"Content-Type": "text/plain"});
+    response.write("incorrect password");
+    response.end();
+}
+
+//insert the user to the users DB
 function insertUser (user, response, curUUID){
     console.log("going to insert:" + user.username);
-    user.save(function(err, currentUser) {
+
+    //try
+    user.received_emails.push(tmpEmail);
+    user.sent_emails.push(tmpEmail);
+
+    user.save(function(err, user) {
         if (err) {
             console.log(err);
-        } // TODO handle the error
+        }
         else {
-            console.log('OK '+user.username+" Addad :)");
-            var cookieToHeader = 'uuid=' + curUUID;
-            console.log(cookieToHeader);
-            response.writeHead(200, {"Content-Type": "text/plain", "Set-Cookie" : cookieToHeader});
-            response.write("user registered");
-            response.end();
+            loginUserRespond(user, response, curUUID);
 
         }
     });
 }
 
-function existsUser(user, response) {
+function getUUIDFromGetRequest(request){
+    var tmpUUID;
+    try{
+        tmpUUID = queryString.parse(request.headers['cookie']).uuid;
+        console.log('tmpUUID:' + tmpUUID);
+        //return tmpUUID;
+    }catch(err){
+        console.log('ERROR:' + err);
+    }
+    return tmpUUID;
 
+}
+
+//Send back to the user the response include the relevant cookie (header)
+function loginUserRespond (user, response, curUUID){
+    console.log('OK ' + user.username + " Addad :)");
+    var cookieToHeader = 'uuid=' + curUUID;
+    console.log(cookieToHeader);
+    response.writeHead(200, {"Content-Type": "text/plain", "Set-Cookie" : cookieToHeader});
+    response.write("user registered");
+    response.end();
+
+}
+
+
+//If the user try to register with an exists username
+function existsUser(user, response) {
     response.writeHead(403, {"Content-Type": "text/plain"});
     response.write("invalid username:" + user.username + " already exist at db");
     response.end();
@@ -240,24 +291,57 @@ function startSession(username) {
 
 }
 
+
 function extendExpiration(curUUID){
     rc.expire(curUUID, TTL);
 }
 
 function getEmailsHelper(request, respond){
-    if(incomeUUID.length === 16){
-       // console.log(rc.get(currentUUID));
-        extendExpiration(incomeUUID);
-        var currentUsername = rc.get(incomeUUID);
+    var tmpUUID = getUUIDFromGetRequest(request);
+    if(tmpUUID){
+        // console.log(rc.get(currentUUID));
+        extendExpiration(tmpUUID);
+        var currentUsername;
+        rc.get(tmpUUID, function(err, value) {
+            if (err) {
+                console.error("error from redis get:" + err);
+                currentUsername = 0;
+            } else {
+                console.log("Worked: " + value);
+                currentUsername = value;
+                if(currentUsername){
+                    User.findOne({username: currentUsername}, function(err,obj){
+                        if(obj){
+                            console.log(obj);
+                            extractReceivedMails(obj);
+                        }
+
+                    });
+                }
+            }
+        });
 
         console.log(currentUsername);
-        User.findOne({username: currentUsername}, function(err,obj){
 
-            if(obj){
+    }
+}
 
-                console.log(obj);
-            }
+function extractReceivedMails(user){
 
+    var emailsRecievePointersArr = user.received_emails;
+    console.log(emailsRecievePointersArr);
+    if(emailsRecievePointersArr){
+        emailsRecievePointersArr.forEach(function(emailID){
+            console.log(emailID)
+            Email.findOne({_id: emailID}, function(err,emailObject){
+               if(err){
+                   console.log('ERROR:' + err);
+               }
+               else {
+                   console.log(emailObject);
+               }
+            });
         });
     }
+    // User.findOne({username: parseBody.username}, function(err,obj) {
 }
