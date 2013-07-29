@@ -6,6 +6,8 @@
 	    "backbone" : "*",
 	    "redis" : "*",
 	    "underscore" : "*",
-	    "socket.io": "*"
+	    "socket.io": "*",
+		"mongoose": "*",
+		"node-uuid": "*"
     }
 }
