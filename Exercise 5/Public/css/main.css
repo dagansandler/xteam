@@ -190,6 +190,23 @@ a:hover { text-decoration:none}
 	border-bottom-right-radius: 4px 4px;
 	border-bottom-left-radius: 4px 4px;
 }
+.delete {
+	font-size: 12px;
+	clear: both;
+	background-color: #005481;
+	border: none;
+	color: #EEE;
+	cursor: pointer;
+	font-weight: normal;
+	text-transform: uppercase;
+	overflow: visible;
+	padding: 4px 4px;
+	text-align: center;
+	border-top-right-radius: 4px 4px;
+	border-top-left-radius: 4px 4px;
+	border-bottom-right-radius: 4px 4px;
+	border-bottom-left-radius: 4px 4px;
+}
 #compose_div {
 	background: #e5e5e5;
 	word-break: break-word;
@@ -204,22 +221,35 @@ a:hover { text-decoration:none}
 	left:0px;
 	top:150px;
 }
-.content {
-}
 .mail_header {
+	float:left;
+	width: 70%;
+	height: auto;
 }
-.to, .from {
-	float: auto;
-}
-.users {
+.mail_footer {
+	width: 30;
 	float: right;
-	width: 30%;
+	height: auto;
+}
+.mail_footer  div {
+	float: auto;
+	padding: 3px;
+}
+.body {
+	display: none;
+	height: auto;
 }
 li, .view {
+	float:auto;
 	list-style-type: none;
 	background: #f2f2f2;
 	margin-bottom: 10px;
 	padding: 5px;
 	border-radius: 5px;
+	height: auto;
+	overflow: hidden;
+}
+.mail_icon {
+	width: 20px;
 	height: auto;
 }
