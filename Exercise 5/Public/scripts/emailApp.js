@@ -24,7 +24,7 @@ var emailApp = emailApp || {};
             var newEmailArrived = new EmailModel({
                 from: data.from,
                 to: data.to,
-                sentDate: data.date,
+                sentDate: data.sentDate,
                 subject: data.subject,
                 body: data.body,
                 isRead: 'false'

@@ -13,21 +13,33 @@ db.once('open', function callback() {
 var EmailsSchema = mongoose.Schema({
     from: String,
     to: String,
-    sendDate: String,
+    sentDate: String,
     subject: String,
     body: String,
     isRead: String
 });
 
 //Users Schema
+//var UsersSchema = mongoose.Schema({
+//    username: String,
+//    password: String,
+//    firstname: String,
+//    lastname: String,
+//    age: Number,
+//    age: Number,
+//    received_emails: [mongoose.Schema.Types.ObjectId],
+//    sent_emails:[mongoose.Schema.Types.ObjectId]
+//
+//});
+
 var UsersSchema = mongoose.Schema({
     username: String,
     password: String,
     firstname: String,
     lastname: String,
     age: Number,
-    received_emails: [mongoose.Schema.Types.ObjectId],
-    sent_emails:[mongoose.Schema.Types.ObjectId]
+    received_emails: [String],
+    sent_emails:[String]
 
 });
 
@@ -100,6 +112,8 @@ function requestHandler(request, response) {
 
         case 'DELETE':
             deleteHandeler(request, response);
+            break;
+
         default:
             console.log('UNHANDLE REQUEST:' + request.method);
             break;
@@ -248,19 +262,67 @@ function deleteHandeler(request, response) {
         body += data;
         console.log('GOT IN DELETE:' + body);
         var parseDeleteBody = queryString.parse(body);
-        Email.findOne({from:parseDeleteBody.from, to:parseDeleteBody.to, sendDate:parseDeleteBody.sendDate, subject:parseDeleteBody.subject, body:parseDeleteBody}, function(err, email){
+        console.log('parseDeleteBody._id:' + parseDeleteBody._id);
+
+        var myQuery;
+        if(parseDeleteBody._id){
+            Email.findOne({_id: mongoose.Types.ObjectId(parseDeleteBody._id)}, function(err, email){
+                updateSchemas(err, email, parseDeleteBody);
+            });
+        }
+        else{
+            Email.findOne({from:parseDeleteBody.from, to:parseDeleteBody.to, sentDate:parseDeleteBody.sentDate, subject:parseDeleteBody.subject, body:parseDeleteBody.body}, function(err, email){
+                updateSchemas(err, email, parseDeleteBody);
+            });
+        }
+
+
+    });
+}
+function updateSchemas(err, email, parseDeleteBody){
+    if(err){
+        console.log('Error during find:' + err);
+    }
+    else if (email){
+        console.log('EMAIL FOUND TO DELETE:' + email);
+        email.remove(function(err, email){
             if(err){
-                console.log('Error during find:' + err);
+                console.log('Error during remove email' + err);
             }
-            else if (email){
-                console.log('EMAIL FOUND TO DELETE:' + email);
-                email.remove();
-                console.log('going to remove email:' + email);
-                User.update({username:email.from}, {$pull: {sent_emails: email._id}}, false, true);
-                User.update({username:email.to}, {$pull: {received_emails: email._id}}, false, true);
+            else {
+                console.log('email deleted:' + email);
             }
         });
-    });
+        console.log('going to remove email:' + email._id.toString());
+        console.log('parseDeleteBody.from:' + parseDeleteBody.from);
+        console.log('parseDeleteBody._id:' + email.from);
+        console.log('parseDeleteBody._id:' + email.to);
+        User.update({'username':email.from}, {$pull: {'sent_emails': '51f7ffb97482bae112000004'}}, function (err,numAffected,raw){
+            if (err) {
+                console.log('Error during update user array' + err);
+            }
+            else {
+                console.log('numAffected:' + numAffected);
+                console.log('raw:' + raw);
+
+            }
+
+        });
+        User.update({'username':email.to}, {$pull: {'received_emails': email._id.toString()}}, function (err,numAffected,raw){
+            if (err) {
+                console.log('Error during update user array' + err);
+            }
+            else {
+                console.log('numAffected:' + numAffected);
+                console.log('raw:' + raw);
+
+            }
+
+        });
+    }
+    else if(!email){
+        console.log("NO EMAIL FOUND!!!!!!!!");
+    }
 }
 
 function badUsernameLogin(response){
@@ -369,12 +431,14 @@ function getEmailsHelper(request, response){
 function extractReceivedMails(user, response){
 
     var emailsReceivePointersArr = user.received_emails;
-    console.log('emailsReceivePointersArr' + emailsReceivePointersArr);
+    console.log('emailsReceivePointersArr:' + emailsReceivePointersArr);
     var ans = [];
+
 
     if(emailsReceivePointersArr){
         var emailSize = emailsReceivePointersArr.length;
         var counter = 0;
+
 
         emailsReceivePointersArr.forEach(function(emailID){
             //console.log('emailID:' + emailID);
@@ -395,7 +459,9 @@ function extractReceivedMails(user, response){
             });
 
         });
+
     }
+
 }
 
 function sendBackEmails(emails, response) {
@@ -411,7 +477,7 @@ function sendNewEmailHelper(email, response) {
         to: email.to,
         subject: email.subject,
         body: email.body,
-        sendDate: email.sentDate,
+        sentDate: email.sentDate,
         isRead: 'false'
     });
 
@@ -444,7 +510,7 @@ function updateUsersForEmails(email, response) {
             console.log('Update ' + data + ' rows!!!')
         }
     });
-    //update reciever
+    //update receiver
     User.update({username:email.to}, {$push: {received_emails: email._id}}, {upsert:false}, function(err, data){
         if(err){
             console.log('failed fo update receiver:' + err);
