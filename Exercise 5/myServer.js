@@ -58,7 +58,7 @@ socket.sockets.on('connection', function (socket) {
         }
         else if (value) {
             uuidSocket[value] = socket;
-           // console.log('SocketIO value:' + value);
+            // console.log('SocketIO value:' + value);
 
             console.log('uuidSocket:' + uuidSocket);
         }
@@ -71,6 +71,8 @@ socket.sockets.on('connection', function (socket) {
     socket.on('my other event', function (data) {
         console.log(data);
     });
+
+
 });
 
 //redis
@@ -96,6 +98,8 @@ function requestHandler(request, response) {
             postHandler(request, response);
             break;
 
+        case 'DELETE':
+            deleteHandeler(request, response);
         default:
             console.log('UNHANDLE REQUEST:' + request.method);
             break;
@@ -235,6 +239,27 @@ function postHandler(request, response) {
     });
     response.on('end', function() {
         console.log("End_Body: " + body);
+    });
+}
+
+function deleteHandeler(request, response) {
+    var body = '';
+    request.on('data', function(data) {
+        body += data;
+        console.log('GOT IN DELETE:' + body);
+        var parseDeleteBody = queryString.parse(body);
+        Email.findOne({from:parseDeleteBody.from, to:parseDeleteBody.to, sendDate:parseDeleteBody.sendDate, subject:parseDeleteBody.subject, body:parseDeleteBody}, function(err, email){
+            if(err){
+                console.log('Error during find:' + err);
+            }
+            else if (email){
+                console.log('EMAIL FOUND TO DELETE:' + email);
+                email.remove();
+                console.log('going to remove email:' + email);
+                User.update({username:email.from}, {$pull: {sent_emails: email._id}}, false, true);
+                User.update({username:email.to}, {$pull: {received_emails: email._id}}, false, true);
+            }
+        });
     });
 }
 
@@ -429,8 +454,12 @@ function updateUsersForEmails(email, response) {
             console.log('OK-Update:' + email.to + ' received_emails array' );
             console.log('emailJson:' + email.toJSON);
             console.log('email:' + email);
+
             var currentReceiverSocket = uuidSocket[email.to];
-            currentReceiverSocket.emit('got_email', email);
+            console.log('currentReceiverSocket:' + currentReceiverSocket);
+            if(currentReceiverSocket){
+                currentReceiverSocket.emit('got_email', email);
+            }
 
         }
         else if(data === 0){

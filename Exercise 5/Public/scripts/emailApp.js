@@ -33,7 +33,12 @@ var emailApp = emailApp || {};
             emailApp.emailCollection.add(newEmailArrived, {at:0});
         });
 
-        $('#new_email').submit(function(ev){
+        $('#delete_btn').click(function(){
+            console.log(this);
+        });
+
+        $('#new_email').click(function(){
+
             var myDate = new Date();
            // $.formar.date
             var now = (myDate.getDate()) + '/' + (myDate.getMonth()+1) + '/' + myDate.getFullYear() + '/' + myDate.getHours()+ '/' + myDate.getMinutes() + '/' + myDate.getSeconds();
