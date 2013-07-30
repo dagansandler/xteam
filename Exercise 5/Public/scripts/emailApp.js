@@ -1,16 +1,6 @@
 var emailApp = emailApp || {};
 
 (function($) {
-
-    //emailApp.emailAppView = new EmailAppView();
-
-
-   // var email2 = new EmailModel({from:'ran2', to:'Hadass2', subject:'xxx2', body:'yyy2'});
-  //  var emails = new EmailCollection();
-  //  emailApp.emailsCollections = emails;
-   // console.log(emails.toJSON());
-
-
     $(document).ready(function() {
 
         $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
@@ -20,8 +10,10 @@ var emailApp = emailApp || {};
 
 
         socket.on('got_email', function (data) {
+            //New mail arrived
             console.log(data);
 			if(data.from && data.to) {
+                //Create new EmailModel
 				var newEmailArrived = new EmailModel({
 					from: data.from,
 					to: data.to,
@@ -30,26 +22,22 @@ var emailApp = emailApp || {};
 					body: data.body,
 					isRead: 'false'
 				});
+                //Add the new email to the collection for fire the add event
 				emailApp.emailCollection.add(newEmailArrived, {at:0});
 			}
         });
 
-        $('#delete_btn').click(function(){
-            console.log(this);
-        });
-
+        //Handel click event for send new email
         $('#add_email').click(function(){
-
+            //Build the AJAX data
             var myDate = new Date();
-           // $.formar.date
             var now = (myDate.getDate()) + '/' + (myDate.getMonth()+1) + '/' + myDate.getFullYear() + ' ' + myDate.getHours()+ ':' + myDate.getMinutes() + ':' + myDate.getSeconds();
             var email = new EmailModel({from:$('#from').val(), to:$('#to').val(), subject:$('#subject').val(), body:$('#body').val(), sentDate: now, isRead:'false'});
-            //emailApp.emailCollection.add(email);
-            //emails.render();
             var action = {action: 'sendNewMail'};
             var emailJSON = email.toJSON();
             var dataToSend = $.extend(action, emailJSON);
-            var newEmailSend = $.ajax({
+
+            var newEmailSend = $.ajax({//sends an AJAX POST request for send the new email
                 url: "/sendEmail",
                 type: "POST",
                 data: dataToSend,
@@ -71,7 +59,7 @@ var emailApp = emailApp || {};
 			$('#new_email')[0].reset();
             return false;
         });
-
+        //create singelton for the collection view
         new EmailContainerView();
 
     });

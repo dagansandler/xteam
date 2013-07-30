@@ -9,16 +9,16 @@ var EmailView = Backbone.View.extend({
         'click #delete_btn' : 'sendDeleteToServer',
 		'click .view' : 'toggleEmail'
     },
-
+    //Init function
     initialize: function() {
         this.template = _.template($('#email_template').html());
     },
-
+    //New update
 	updateIsRead: function(){
 		this.model.set('isRead', true);
 		this.$('.isRead').html('<img src="images/read.png" class="mail_icon"/>');
 	},
-	
+	//Render function
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
 		if(this.model.get('isRead') === 'true') {
@@ -30,12 +30,12 @@ var EmailView = Backbone.View.extend({
 		}
         return this;
     },
-
+    //If the email read or new
 	toggleEmail: function() {
 		this.updateIsRead();
 		this.$('.body').toggle();
    },
-	
+	//Send new email to the server
     sendDeleteToServer: function(){
         console.log('OOOOOOOOOO');
         var from = this.$('.from').text();
