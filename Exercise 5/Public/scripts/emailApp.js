@@ -21,16 +21,17 @@ var emailApp = emailApp || {};
 
         socket.on('got_email', function (data) {
             console.log(data);
-            var newEmailArrived = new EmailModel({
-                from: data.from,
-                to: data.to,
-                sentDate: data.sentDate,
-                subject: data.subject,
-                body: data.body,
-                isRead: 'false'
-            });
-
-            emailApp.emailCollection.add(newEmailArrived, {at:0});
+			if(data.from && data.to) {
+				var newEmailArrived = new EmailModel({
+					from: data.from,
+					to: data.to,
+					sentDate: data.sentDate,
+					subject: data.subject,
+					body: data.body,
+					isRead: 'false'
+				});
+				emailApp.emailCollection.add(newEmailArrived, {at:0});
+			}
         });
 
         $('#delete_btn').click(function(){

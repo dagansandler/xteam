@@ -109,19 +109,16 @@ $(document).ready(function() {
 });
 
 function status200Helper(response){
-    alert('got 200');
     window.location.assign('/email.html');
 
 }
 
 function status403HelperRegister(response){
-    alert('got 403');
     $("#server_answer").text("username can't be used");
 }
 
 
 function status403HelperLogin(response){
-    alert('got 403');
     $("#server_answer").text("incorrect password");
 }
 
