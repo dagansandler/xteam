@@ -24,7 +24,7 @@ var emailApp = emailApp || {};
             var newEmailArrived = new EmailModel({
                 from: data.from,
                 to: data.to,
-                sentDate: data.date,
+                sentDate: data.sentDate,
                 subject: data.subject,
                 body: data.body,
                 isRead: 'false'
@@ -37,11 +37,11 @@ var emailApp = emailApp || {};
             console.log(this);
         });
 
-        $('#new_email').click(function(){
+        $('#add_email').click(function(){
 
             var myDate = new Date();
            // $.formar.date
-            var now = (myDate.getDate()) + '/' + (myDate.getMonth()+1) + '/' + myDate.getFullYear() + '/' + myDate.getHours()+ '/' + myDate.getMinutes() + '/' + myDate.getSeconds();
+            var now = (myDate.getDate()) + '/' + (myDate.getMonth()+1) + '/' + myDate.getFullYear() + ' ' + myDate.getHours()+ ':' + myDate.getMinutes() + ':' + myDate.getSeconds();
             var email = new EmailModel({from:$('#from').val(), to:$('#to').val(), subject:$('#subject').val(), body:$('#body').val(), sentDate: now, isRead:'false'});
             //emailApp.emailCollection.add(email);
             //emails.render();

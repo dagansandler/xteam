@@ -13,7 +13,7 @@ db.once('open', function callback() {
 var EmailsSchema = mongoose.Schema({
     from: String,
     to: String,
-    sendDate: String,
+    sentDate: String,
     subject: String,
     body: String,
     isRead: String
@@ -248,7 +248,7 @@ function deleteHandeler(request, response) {
         body += data;
         console.log('GOT IN DELETE:' + body);
         var parseDeleteBody = queryString.parse(body);
-        Email.findOne({from:parseDeleteBody.from, to:parseDeleteBody.to, sendDate:parseDeleteBody.sendDate, subject:parseDeleteBody.subject, body:parseDeleteBody}, function(err, email){
+        Email.findOne({from:parseDeleteBody.from, to:parseDeleteBody.to, sentDate:parseDeleteBody.sentDate, subject:parseDeleteBody.subject, body:parseDeleteBody}, function(err, email){
             if(err){
                 console.log('Error during find:' + err);
             }
@@ -411,7 +411,7 @@ function sendNewEmailHelper(email, response) {
         to: email.to,
         subject: email.subject,
         body: email.body,
-        sendDate: email.sentDate,
+        sentDate: email.sentDate,
         isRead: 'false'
     });
 

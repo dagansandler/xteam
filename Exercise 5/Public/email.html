@@ -14,7 +14,7 @@
 		</div>
 		<div id="main_container">
 			<div id="compose_div">
-				<input id="compose_btn" class="compose" type="button" value='COMPOSE'>
+				<input id="compose_btn" class="compose" type="button" value='COMPOSE' />
 				<form id='new_email'>
 					<div id='label'>From:</div>
 					<input id='from' name='from' type='text'/>
@@ -43,18 +43,16 @@
             <div class="view">
 				<div class="mail_header">
 					<h3 class="subject"><%= subject %></h3>
-					<div class="users">
-						<div class="from">From: <%= from %></div>
-						<div class="to">To: <%= to %></div>
-					</div>
-				</div>
-				<div class="content">
 					<div class="body"> <%= body %></div>
+				</div>
+				<div class="mail_footer">
+					<div class="from">From: <%= from %></div>
+					<div class="to">To: <%= to %></div>
 					<div>
-						<span class="sentDate"> <%= sentDate %></span>
 						<span class="isRead"> <%= isRead %></span>
-                <button id="delete_btn">Delete</button>
+						<button id="delete_btn" class="delete">Delete</button>
 					</div>
+					<div class="sentDate"> <%= sentDate %></div>
 				</div>
             </div>
         </script>

@@ -13,10 +13,4 @@ $(document).ready(function() {
 		$('#new_email').hide();
 		$('#compose_btn').fadeIn('fast');
 	});
-	
-	/*handle e-mail interaction*/
-	$('li').click(function() {
-		$(".content").show();
-	});
-	
 });
