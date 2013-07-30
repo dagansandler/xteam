@@ -13,9 +13,10 @@ db.once('open', function callback() {
 var EmailsSchema = mongoose.Schema({
     from: String,
     to: String,
-    date: { type: Date, default: Date.now },
+    sendDate: String,
     subject: String,
-    body: String
+    body: String,
+    isRead: String
 });
 
 //Users Schema
@@ -33,25 +34,6 @@ var UsersSchema = mongoose.Schema({
 var User = mongoose.model('User', UsersSchema);
 var Email = mongoose.model('Email', EmailsSchema);
 
-var tmpEmail = new Email({
-    from: 'ran',
-    to: 'ranran',
-    subject: 'subsubsub',
-    body: 'body body body body body body body body '
-
-});
-
-tmpEmail.save(function(err, email) {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        console.log(email);
-
-    }
-});
-
-
 
 var http = require('http');
 var fs = require('fs');
@@ -63,6 +45,33 @@ var socket = require('socket.io').listen(server),
     Backbone = require('backbone'),
 //  models = require('./Public/Models/models'),
     uuid = require('node-uuid');
+
+uuidSocket = {};
+
+socket.sockets.on('connection', function (socket) {
+    var tmpUUID = queryString.parse(socket.handshake.headers.cookie).uuid;
+    console.log('From SocketIO:' + tmpUUID);
+    rc.get(tmpUUID, function(err, value){
+
+        if (err){
+            console.log('ERROR:' + err);
+        }
+        else if (value) {
+            uuidSocket[value] = socket;
+           // console.log('SocketIO value:' + value);
+
+            console.log('uuidSocket:' + uuidSocket);
+        }
+        else if(!value){
+            console.log('No UUID found!');
+        }
+
+    });
+    socket.emit('got_email', { hello: 'world' });
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+});
 
 //redis
 var redis = require("redis"),
@@ -90,7 +99,6 @@ function requestHandler(request, response) {
         default:
             console.log('UNHANDLE REQUEST:' + request.method);
             break;
-
     }
 
 }
@@ -108,48 +116,51 @@ function getHandler(request, response) {
         getEmailsHelper(request, response);
     }
 
-    fs.exists(root + request.url, function(exists) {
-        if (exists) { /*file is there*/
-            fs.lstat(root + request.url, function(err, stats) {
-                if (err) {
-                    console.log("found err: " + err);
-                    throw err;
-                }
-                if (stats.isFile()) { /*is file*/
-                    fs.readFile(root + request.url, function(err, data) {
-                        if (err) {
-                            console.log("error on file read: " + request.url);
-                            console.log(err);
-                        }
-                        //response.headers["Connection"] = "Keep-Alive";
-                        //response.headers["Content-Type"] = content_type;
-                        response.write(data);
+    else {
+        fs.exists(root + request.url, function(exists) {
+            if (exists) { /*file is there*/
+                fs.lstat(root + request.url, function(err, stats) {
+                    if (err) {
+                        console.log("found err: " + err);
+                        throw err;
+                    }
+                    if (stats.isFile()) { /*is file*/
+                        fs.readFile(root + request.url, function(err, data) {
+                            if (err) {
+                                console.log("error on file read: " + request.url);
+                                console.log(err);
+                            }
+                            //response.headers["Connection"] = "Keep-Alive";
+                            //response.headers["Content-Type"] = content_type;
+                            response.write(data);
+                            response.end();
+                            console.log("Serving file " + request.url + " to client");
+                        });
+                    } else { /*is directory*/
+                        //response.headers["Content-Type"] = "text/html";
+                        response.write("Can not access directories");
                         response.end();
-                        console.log("Serving file " + request.url + " to client");
-                    });
-                } else { /*is directory*/
-                    //response.headers["Content-Type"] = "text/html";
-                    response.write("Can not access directories");
-                    response.end();
-                }
-            });
-        } else { /*file not found*/
-            //response.status = 404;
-            //response.headers["Content-Type"] = "text/html";
-            //response.write("<b>404 Not Found</b>");
-            response.end();
-        }
-    });
+                    }
+                });
+            } else { /*file not found*/
+                //response.status = 404;
+                //response.headers["Content-Type"] = "text/html";
+                //response.write("<b>404 Not Found</b>");
+                response.end();
+            }
+        });
+    }
 }
 
 function postHandler(request, response) {
-
+    //console.log(request);
     var body = '';
     request.on('data', function(data) {
         body += data;
         var parseBody = queryString.parse(body);
         console.log("Body: " + body);
         console.log(parseBody.action);
+
         switch (parseBody.action) {
 
             case 'register':
@@ -166,7 +177,7 @@ function postHandler(request, response) {
                 });
 
                 User.findOne({username: parseBody.username}, function(err,obj) {
-                    console.log(obj);
+                    //console.log(obj);
                     if (!obj) {
                         var uuidTMP = startSession(parseBody.username);
                         insertUser(currentUser, response, uuidTMP);
@@ -215,6 +226,11 @@ function postHandler(request, response) {
                 });
 
                 break;
+            case 'sendNewMail':
+                var tmpUUID = getUUIDFromGetRequest(request);
+                extendExpiration(tmpUUID);
+                sendNewEmailHelper(parseBody, response);
+                break;
         };
     });
     response.on('end', function() {
@@ -232,10 +248,6 @@ function badUsernameLogin(response){
 //insert the user to the users DB
 function insertUser (user, response, curUUID){
     console.log("going to insert:" + user.username);
-
-    //try
-    user.received_emails.push(tmpEmail);
-    user.sent_emails.push(tmpEmail);
 
     user.save(function(err, user) {
         if (err) {
@@ -296,52 +308,146 @@ function extendExpiration(curUUID){
     rc.expire(curUUID, TTL);
 }
 
-function getEmailsHelper(request, respond){
+function getEmailsHelper(request, response){
     var tmpUUID = getUUIDFromGetRequest(request);
     if(tmpUUID){
-        // console.log(rc.get(currentUUID));
         extendExpiration(tmpUUID);
         var currentUsername;
+
         rc.get(tmpUUID, function(err, value) {
             if (err) {
                 console.error("error from redis get:" + err);
                 currentUsername = 0;
-            } else {
+            }
+            else {
+
                 console.log("Worked: " + value);
                 currentUsername = value;
                 if(currentUsername){
                     User.findOne({username: currentUsername}, function(err,obj){
-                        if(obj){
-                            console.log(obj);
-                            extractReceivedMails(obj);
+                        if(err) {
+                            console.error("error from mongo findOne:" + err);
                         }
+                        if(obj){
+                            console.log('Found obj in DB');
+                            extractReceivedMails(obj, response);
 
+                        }
                     });
                 }
             }
         });
 
-        console.log(currentUsername);
-
     }
 }
 
-function extractReceivedMails(user){
+function extractReceivedMails(user, response){
 
-    var emailsRecievePointersArr = user.received_emails;
-    console.log(emailsRecievePointersArr);
-    if(emailsRecievePointersArr){
-        emailsRecievePointersArr.forEach(function(emailID){
-            console.log(emailID)
+    var emailsReceivePointersArr = user.received_emails;
+    console.log('emailsReceivePointersArr' + emailsReceivePointersArr);
+    var ans = [];
+
+    if(emailsReceivePointersArr){
+        var emailSize = emailsReceivePointersArr.length;
+        var counter = 0;
+
+        emailsReceivePointersArr.forEach(function(emailID){
+            //console.log('emailID:' + emailID);
             Email.findOne({_id: emailID}, function(err,emailObject){
-               if(err){
-                   console.log('ERROR:' + err);
-               }
-               else {
-                   console.log(emailObject);
-               }
+                if(err){
+                    console.log('ERROR:' + err);
+                }
+                else {
+                    //console.log(JSON.stringify(emailObject));
+                    ans.push(emailObject);
+                    //response.write(JSON.stringify(emailObject));
+                    counter++;
+                    //console.log(counter);
+                    if (counter === emailSize){
+                        sendBackEmails(ans, response);
+                    }
+                }
             });
+
         });
     }
-    // User.findOne({username: parseBody.username}, function(err,obj) {
+}
+
+function sendBackEmails(emails, response) {
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.write(JSON.stringify(emails));
+    response.end();
+}
+
+function sendNewEmailHelper(email, response) {
+
+    var newEmail = new Email({
+        from: email.from,
+        to: email.to,
+        subject: email.subject,
+        body: email.body,
+        sendDate: email.sentDate,
+        isRead: 'false'
+    });
+
+    newEmail.save(function(err, emailSaved) {
+        if (err) {
+            console.log('Error on saving' + err);
+        }
+        else {
+            console.log('Email Saved:' + emailSaved);
+            updateUsersForEmails(emailSaved, response);
+        }
+    });
+}
+
+function updateUsersForEmails(email, response) {
+    //update sender
+    User.update({username:email.from}, {$push: {sent_emails: email._id}}, {upsert:false}, function(err, data){
+        if(err){
+            console.log('failed fo update sender:' + err);
+        }
+        //date is the number of row effected
+        else if (data === 1){
+            console.log('OK-Update:' + email.from + ' sent_emails array' );
+        }
+        else if(data === 0){
+            console.log('No data updated (sender) send 400 back!')
+            send400BadRequest(response);
+        }
+        else {
+            console.log('Update ' + data + ' rows!!!')
+        }
+    });
+    //update reciever
+    User.update({username:email.to}, {$push: {received_emails: email._id}}, {upsert:false}, function(err, data){
+        if(err){
+            console.log('failed fo update receiver:' + err);
+        }
+        //date is the number of row effected
+        else if (data === 1){
+            console.log('OK-Update:' + email.to + ' received_emails array' );
+            console.log('emailJson:' + email.toJSON);
+            console.log('email:' + email);
+            var currentReceiverSocket = uuidSocket[email.to];
+            currentReceiverSocket.emit('got_email', email);
+
+        }
+        else if(data === 0){
+            console.log('No data updated (receiver) send 400 back!');
+            send400BadRequest(response);
+        }
+        else {
+            console.log('Update ' + data + ' rows!!!')
+        }
+    });
+}
+
+
+
+function send400BadRequest(response){
+    response.writeHead(400, {"Content-Type": "text/plain"});
+    response.write("invalid sender");
+    response.end();
+
 }

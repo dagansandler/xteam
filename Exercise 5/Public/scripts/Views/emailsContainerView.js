@@ -5,20 +5,13 @@ var EmailContainerView = Backbone.View.extend({
     el: $('#emails_container'),
 
     initialize: function() {
+        this.model.fetch();
+        this.render();
         this.model.on('add', this.render, this);
         this.model.on('remove', this.render, this);
     },
 
     render: function(){
-
-        this.model.fetch({
-            success:function(users){
-                console.log(users);
-            }
-
-
-        })
-
 
         var self = this;
         self.$el.html('');
@@ -28,7 +21,4 @@ var EmailContainerView = Backbone.View.extend({
 
         return this;
     }
-
-
-
 });
