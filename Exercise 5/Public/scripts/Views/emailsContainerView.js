@@ -9,6 +9,7 @@ var EmailContainerView = Backbone.View.extend({
         this.render();
         this.model.on('add', this.render, this);
         this.model.on('remove', this.render, this);
+       // this.bind('remove', this.onModelRemoved, this);
     },
 
     render: function(){
@@ -20,5 +21,9 @@ var EmailContainerView = Backbone.View.extend({
         });
 
         return this;
+    },
+    onModelRemoved: function (model, collection, options){
+        console.log('MODEL:' + model);
+
     }
 });
