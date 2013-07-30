@@ -7,7 +7,8 @@ var EmailModel = Backbone.Model.extend({
         to: '',
         sentDate: '',
         subject: '',
-        body: ''
+        body: '',
+        isRead:''
     }
 
 });
