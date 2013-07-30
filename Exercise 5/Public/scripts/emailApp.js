@@ -62,6 +62,7 @@ var emailApp = emailApp || {};
                 }
             });
             console.log(emailApp.emailCollection.toJSON());
+			$('#new_email')[0].reset();
             return false;
         });
 

@@ -2,38 +2,62 @@
 <html>
 
     <head>
+		<script type="text/javascript" src="scripts/jquery-1.9.1.min.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/main.css">
+		<script type="application/javascript" src="scripts/email.js"></script>
         <title>Xteam-Emails</title>
     </head>
 
     <body>
-
-        <form id='new_email'>
-            <label>From:</label><input id='from' name='from' type='text'/>
-            <label>To:</label><input id='to' name='to' type='text'/>
-            <label>Subject:</label><input id='subject' name='subject' type='text'/>
-            <label>Body:</label><input id='body' name='body' type='text'/>
-            <input id="add_email" type="submit" value='Send'>
-        </form>
-
+		<div id="logo">
+			<img src="images/xteamailogo.png" width='200px'/>
+		</div>
+		<div id="main_container">
+			<div id="compose_div">
+				<input id="compose_btn" class="compose" type="button" value='COMPOSE'>
+				<form id='new_email'>
+					<div id='label'>From:</div>
+					<input id='from' name='from' type='text'/>
+					<div id='label'>To:</div>
+					<input id='to' name='to' type='text'/>
+					<div id='label'>Subject:</div>
+					<input id='subject' name='subject' type='text'/>
+					<div id='label'>Body:</div>
+					<textarea  id='body' name='body'></textarea>
+					<div>
+						<input id="cancel_compose" class="cancel" type="button" value='Cancel'>
+						<input id="add_email" class="compose" type="submit" value='Send'>
+					</div>
+				</form>
+				<div id="aboutapp">
+					<a href="readme.html">About this app</a>
+				</div>
+			</div>
+			
+			<div id="email_panel">
+				<div id="emails_container"></div>
+			</div>
+		</div>
+		
         <script type="text/template" id="email_template">
             <div class="view">
-                <span class="from">  <%= from %></span>
-                <span class="to">  <%= to %></span>
-                <span class="subject"> <%= subject %></span>
-                <span class="body">  <%= body %></span>
-                <span class="sentDate">  <%= sentDate %></span>
-                <span class="isRead">  <%= isRead %></span>
+				<div class="mail_header">
+					<h3 class="subject"><%= subject %></h3>
+					<div class="users">
+						<div class="from">From: <%= from %></div>
+						<div class="to">To: <%= to %></div>
+					</div>
+				</div>
+				<div class="content">
+					<div class="body"> <%= body %></div>
+					<div>
+						<span class="sentDate"> <%= sentDate %></span>
+						<span class="isRead"> <%= isRead %></span>
+					</div>
+				</div>
             </div>
             <button></button>
-
-
         </script>
-
-
-
-        <ul id='emails_container'></ul>
-
-
 
         <script src="bower_components/todomvc-common/base.js"></script>
         <script src="bower_components/jquery/jquery.js"></script>
