@@ -8,7 +8,7 @@ $(document).ready(function() {
 	
 	$(".tab").click(function() {
 		var X=$(this).attr('id');
-		if(X=='signup') {
+		if(X==='signup') {
 			$("#login").removeClass('select');
 			$("#signup").addClass('select');
 			$("#loginbox").hide();

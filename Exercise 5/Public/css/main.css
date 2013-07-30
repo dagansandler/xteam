@@ -8,11 +8,11 @@
 	height: auto;
 }
 #tabbox {
-	height:40px
+	height: 25px;
 }
 #panel {
 border: solid 1px #f2f2f2;
-height: 350px;
+height: 400px;
 padding: 20px;
 background-color: #e5e5e5;
 color:#333;
@@ -25,10 +25,10 @@ margin-right: 1px;
 .tab {
 background: #999;
 display: block;
-height: 40px;
-line-height: 40px;
+height: 25px;
+line-height: 25px;
 text-align: center;
-width: 80px;
+width: 110px;
 float: right;
 font-weight: bold;
 -webkit-border-top-left-radius: 4px;
@@ -36,6 +36,8 @@ font-weight: bold;
 -moz-border-radius: 4px 4px 0px 0px;
 border-top-left-radius: 4px 4px;
 border-top-right-radius: 4px 4px;
+margin-left: 5px;
+margin-right: 1px;
 }
 .select {
 background-color: #e5e5e5;
@@ -121,6 +123,11 @@ a:hover { text-decoration:none}
 	padding:10px;
 }
 #signupbox {
+	min-height:200px;
+	padding:10px;
+	display:none;
+}
+#userbox, #testerbox {
 	min-height:200px;
 	padding:10px;
 	display:none;
