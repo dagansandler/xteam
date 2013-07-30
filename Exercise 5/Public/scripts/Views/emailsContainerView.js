@@ -17,7 +17,10 @@ var EmailContainerView = Backbone.View.extend({
         var self = this;
         self.$el.html('');
         _.each(this.model.toArray(), function(email, i){
-           self.$el.append((new EmailView({model: email})).render().$el);
+			var mailModel = (new EmailView({model: email}));
+			if(mailModel.model.get('to') !== '') {
+				self.$el.append(mailModel.render().$el);
+			}
         });
 
         return this;

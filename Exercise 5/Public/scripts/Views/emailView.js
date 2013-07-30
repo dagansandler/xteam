@@ -6,19 +6,36 @@ var EmailView = Backbone.View.extend({
     tagName:'li',
 
     events: {
-        'click #delete_btn' : 'sendDeleteToServer'
+        'click #delete_btn' : 'sendDeleteToServer',
+		'click .view' : 'toggleEmail'
     },
 
     initialize: function() {
         this.template = _.template($('#email_template').html());
     },
 
+	updateIsRead: function(){
+		this.model.set('isRead', true);
+		this.$('.isRead').html('<img src="images/read.png" class="mail_icon"/>');
+	},
+	
     render: function() {
-
         this.$el.html(this.template(this.model.toJSON()));
+		if(this.model.get('isRead') === 'true') {
+			/*inject open mail icon*/
+			this.$('.isRead').html('<img src="images/read.png" class="mail_icon"/>');
+		} else {
+			/*inject closed mail icon*/
+			this.$('.isRead').html('<img src="images/unread.png" class="mail_icon"/>');
+		}
         return this;
     },
 
+	toggleEmail: function() {
+		this.updateIsRead();
+		this.$('.body').toggle();
+   },
+	
     sendDeleteToServer: function(){
         console.log('OOOOOOOOOO');
         var from = this.$('.from').text();
