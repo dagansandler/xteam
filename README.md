@@ -19,7 +19,7 @@ The final assignment (exercise 5, a simple email web app) is hosted on Amazon EC
 Dagan's octocat: ([Kudos @cameronmcefee](https://github.com/cameronmcefee))
 <!-- Using html so images are in reasonable size -->
 <a href="http://octodex.github.com/xtocat/">
-  <img height="300px" width="300px" src="http://octodex.github.com/images/xtocat.jpg" alt="X-tocat" title="X-tocat FTW!" />
+  <img height="200px" width="200px" src="http://octodex.github.com/images/xtocat.jpg" alt="X-tocat" title="X-tocat FTW!" />
 </a>
 
 Ran's octocat: ([Kudos @jina](https://github.com/jina))
