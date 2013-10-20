@@ -1,6 +1,9 @@
 #xteam
 =====
 
+This repository was used for a class in Current Internet Technologies at Ben-Gurion University, Israel.
+The final assignment (exercise 5, a simple email web app) is hosted on Amazon EC2 and can be found [here](http://54.213.120.182:8080/welcome.html)
+
 Our way of life/coding:
 -----------------------
 <blockquote>
@@ -13,8 +16,6 @@ Improve the code and then document it to make it even clearer."
 Team Members:
 * [Dagan Sandler](https://github.com/dagansandler)
 * [Ran Greenberg](https://github.com/gran33)
-
-The final assignment (exercise 5, a simple email web app) is hosted on Amazon EC2 and can be found [here](http://54.213.120.182:8080/welcome.html)
 
 Dagan's octocat: ([Kudos @cameronmcefee](https://github.com/cameronmcefee))
 <!-- Using html so images are in reasonable size -->
